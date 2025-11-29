@@ -1,0 +1,54 @@
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import { AppService } from './app.service';
+import { loginDto } from './dto/login.dto';
+import { timeFrameType } from './dto/types';
+
+@Controller()
+export class AppController {
+  constructor(private readonly appService: AppService) {}
+
+
+  @Get('balances')
+  getBalances(): {} {
+    return this.appService.getBalances();
+  }
+
+
+  @Get('price')
+  getPrice(@Query('currency') currency : string , @Query('timeFrame') timeFrame : any): {} {
+    return this.appService.getPrice(currency , timeFrame);
+  }
+
+
+  @Get('transactionlist')
+  getTransActions(): {} {
+    return this.appService.getTransActions();
+  }
+
+
+  @Get('/market')
+  getState(): {} {
+    return this.appService.getState();
+  }
+
+
+  @Post('/market')
+  setState(@Query('state') state : number , @Query('rsi') rsi : string): {} {
+    return this.appService.setState(state , rsi);
+  }
+
+  
+  @Post('login')
+  async login(@Body() body : loginDto){
+    return this.appService.login(body)
+  }
+
+
+
+  @Post('state')
+  async setStateOfMarket(@Body() body : loginDto){
+    return this.appService.login(body)
+  }
+
+
+}
