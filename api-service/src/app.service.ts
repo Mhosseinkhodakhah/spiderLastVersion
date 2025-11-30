@@ -78,16 +78,44 @@ export class AppService {
   }
 
 
-  async setState(state : number , rsi : string){
+  async setState(state : number , rsi : string , lastPrice : string){
+
+    console.log('its rsi' , state , rsi)
+
     let marketSituation = this.marketRepo.create({
-      state : state,
-      rsi:rsi
+      state : +state,
+      rsi:rsi.toString(),
+      lastPrice : lastPrice
     })
+    
+    let currencies = await this.apiCalService.getCurrencies(1)
+    
+    let currenciesCount = 0
+    
+    let totalBalance = 0
+    
+    for (let i of Object.keys(currencies)){
+      console.log('datata' , Object.keys(currencies[i])[0])
+      if (Object.keys(currencies[i])[0] != 'RLS' && Object.keys(currencies[i])[0] != 'USDT'){
+        currenciesCount+=1
+        let price = await this.apiCalService.getPrice(`${Object.keys(currencies[i])[0]}USDT`)
+        let balanceAmount = +price[price.length-1] * +currencies[i][Object.keys(currencies[i])[0]].balance
+        totalBalance+=balanceAmount
+      }else if(Object.keys(currencies[i])[0] == 'USDT'){
+        totalBalance += +currencies[i][Object.keys(currencies[i])[0]].balance        
+      }
+    }
+    
+    marketSituation.totalBalance = totalBalance.toString()
+    
+    marketSituation.currencies = currenciesCount.toString()
 
     await this.marketRepo.save(marketSituation)
+    
     return {
       success : true,
     }
+    
   }
 
 

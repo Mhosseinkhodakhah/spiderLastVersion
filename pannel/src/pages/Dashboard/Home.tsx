@@ -45,9 +45,11 @@ export default function Home() {
     );
   }
 
+  let marketStateFinal = {marketStatus : 'bearish' , totalBalance : 0 , activeCurrencies : 0 , priceChange : 0}
 
   if (marketState.isSuccess){
-    marketStateData = marketState.data.data    
+    marketStateData = marketState.data.data  
+    marketStateFinal = {marketStatus : marketStateData[0] > marketStateData[1] ? 'bullish' : 'bearish' , totalBalance : +marketStateData[0].totalBalance , activeCurrencies : marketStateData[0].currencies , priceChange : (((+marketStateData[0].totalBalance)-(+marketStateData[1].totalBalance))/(+marketStateData[1].totalBalance))*100}
     console.log('its done' , marketStateData)
   }
 
@@ -78,7 +80,6 @@ export default function Home() {
     );
   }
 
-  let marketStats ={marketStatus : 'bullish' , totalBalance : 193 , activeCurrencies : 2 , priceChange : 4}
 
   // Add error state
   if (isError) {
@@ -110,30 +111,30 @@ export default function Home() {
       <div className="mb-8">
         
         <div className={`relative overflow-hidden rounded-2xl p-6 border-2 backdrop-blur-sm ${
-          marketStats.marketStatus === 'bullish' 
+          marketStateFinal.marketStatus === 'bullish' 
             ? 'bg-gradient-to-r from-green-500/10 to-emerald-500/10 border-green-500/30' 
-            : marketStats.marketStatus === 'bearish'
+            : marketStateFinal.marketStatus === 'bearish'
             ? 'bg-gradient-to-r from-red-500/10 to-orange-500/10 border-red-500/30'
             : 'bg-gradient-to-r from-blue-500/10 to-purple-500/10 border-blue-500/30'
         }`}>
           {/* Market Status Indicator */}
             <div className="mt-4 md:mt-0 flex items-center space-x-2">
               <div className={`w-3 h-3 rounded-full animate-pulse ${
-                marketStats.marketStatus === 'bullish' 
+                marketStateFinal.marketStatus === 'bullish' 
                   ? 'bg-green-400' 
-                  : marketStats.marketStatus === 'bearish'
+                  : marketStateFinal.marketStatus === 'bearish'
                   ? 'bg-red-400'
                   : 'bg-blue-400'
               }`}></div>
               <span className={`font-semibold ${
-                marketStats.marketStatus === 'bullish' 
+                marketStateFinal.marketStatus === 'bullish' 
                   ? 'text-green-400' 
-                  : marketStats.marketStatus === 'bearish'
+                  : marketStateFinal.marketStatus === 'bearish'
                   ? 'text-red-400'
                   : 'text-blue-400'
               }`}>
-                {marketStats.marketStatus === 'bullish' ? 'Bull Market' : 
-                 marketStats.marketStatus === 'bearish' ? 'Bear Market' : 'Market Stable'}
+                {marketStateFinal.marketStatus === 'bullish' ? 'Bull Market' : 
+                 marketStateFinal.marketStatus === 'bearish' ? 'Bear Market' : 'Market Stable'}
               </span>
             </div>
                 <Divider className="lg:hidden md:hidden py-2 mt-2"></Divider>
@@ -157,7 +158,7 @@ export default function Home() {
               <div className="flex flex-col  items-center">
                 <span className="text-gray-400 text-sm mb-1">Total Balance</span>
                 <span className="text-xl font-bold text-white">
-                  ${marketStats.totalBalance.toFixed(2)}
+                  ${marketStateFinal.totalBalance.toFixed(2)}
                 </span>
               </div>
                 <Divider className="lg:hidden md:hidden"></Divider>
@@ -165,7 +166,7 @@ export default function Home() {
               <div className="flex flex-col items-center">
                 <span className="text-gray-400 text-sm mb-1">Currencies</span>
                 <span className="text-xl font-bold text-blue-400">
-                  {marketStats.activeCurrencies}
+                  {marketStateFinal.activeCurrencies}
                 </span>
               </div>
               <Divider className="lg:hidden md:hidden"></Divider>
@@ -173,32 +174,32 @@ export default function Home() {
               <div className="flex flex-col items-center">
                 <span className="text-gray-400 text-sm mb-1">24h Change</span>
                 <span className={`text-xl font-bold ${
-                  marketStats.priceChange > 0 
+                  marketStateFinal.priceChange > 0 
                     ? 'text-green-400' 
-                    : marketStats.priceChange < 0 
+                    : marketStateFinal.priceChange < 0 
                     ? 'text-red-400' 
                     : 'text-gray-400'
                 }`}>
-                  {marketStats.priceChange > 0 ? '+' : ''}{marketStats.priceChange.toFixed(2)}%
+                  {marketStateFinal.priceChange > 0 ? '+' : ''}{marketStateFinal.priceChange.toFixed(2)}%
                 </span>
               </div>
               <Divider className="lg:hidden md:hidden"></Divider> 
             </div>
             
           </div>
-          
+  
           {/* Progress bar for visual indicator */}
           <div className="mt-4 w-full bg-gray-700/50 rounded-full h-2">
             <div 
               className={`h-2 rounded-full transition-all duration-1000 ${
-                marketStats.marketStatus === 'bullish' 
+                marketStateFinal.marketStatus === 'bullish' 
                   ? 'bg-gradient-to-r from-green-400 to-emerald-400' 
-                  : marketStats.marketStatus === 'bearish'
+                  : marketStateFinal.marketStatus === 'bearish'
                   ? 'bg-gradient-to-r from-red-400 to-orange-400'
                   : 'bg-gradient-to-r from-blue-400 to-purple-400'
               }`}
               style={{ 
-                width: `${Math.min(Math.abs(3) * 10, 100)}%` 
+                width: `${Math.min(Math.abs(marketStateFinal.priceChange) * 10, 100)}%` 
               }}
             ></div>
           </div>
@@ -227,7 +228,7 @@ export default function Home() {
                       <span className="text-gray-400 capitalize">{key}:</span>
                       {key == 'BTC' && (
                         <span className={`font-bold text-xl ${(+queryPrice[queryPrice.length-1] > +queryPrice[queryPrice.length-2]) ? 'text-green-400 rounded-xl border border-green-400 p-2 shadow-3xl' : 'text-red-400 rounded-xl border border-red-400 p-2 shadow-3xl'}`}>{
-                          String(queryPrice[queryPrice.length-1])}</span>                        
+                          String(queryPrice[queryPrice.length-1])} $</span>                        
                       )}
                       <span className={`font-bold text-xl ${(+value?.balance > 0 && key != 'RLS') ? 'text-green-400 rounded-xl border border-green-400 p-2 shadow-3xl' : 'text-red-400 rounded-xl border border-red-400 p-2 shadow-3xl'}`}>{
                       String(value?.balance)}</span>

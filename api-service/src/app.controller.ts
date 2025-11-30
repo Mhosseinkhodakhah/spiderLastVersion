@@ -33,8 +33,8 @@ export class AppController {
 
 
   @Post('/market')
-  setState(@Query('state') state : number , @Query('rsi') rsi : string): {} {
-    return this.appService.setState(state , rsi);
+  setState(@Query('state') state : number , @Query('rsi') rsi : string , @Query('lastPrice') lastPrice : string): {} {
+    return this.appService.setState(state , rsi , lastPrice);
   }
 
   
