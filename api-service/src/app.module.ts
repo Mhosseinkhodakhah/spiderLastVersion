@@ -18,9 +18,9 @@ import { market } from './entity/market.entity';
       type: 'postgres',
       host: 'localhost',
       port: 5432,
-      username: 'postgres',
-      password: 'test',
-      database: 'test',
+      username: 'hossein',
+      password: 'hosseinkh1376',
+      database: 'sunelly',
       entities: [
         market
       ],
