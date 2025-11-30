@@ -49,7 +49,7 @@ export default function Home() {
 
   if (marketState.isSuccess){
     marketStateData = marketState.data.data  
-    marketStateFinal = {marketStatus : marketStateData[0] > marketStateData[1] ? 'bullish' : 'bearish' , totalBalance : +marketStateData[0].totalBalance , activeCurrencies : marketStateData[0].currencies , priceChange : (((+marketStateData[0].totalBalance)-(+marketStateData[1].totalBalance))/(+marketStateData[1].totalBalance))*100}
+    marketStateFinal = {marketStatus : +marketStateData[0].lastPrice > +marketStateData[1].lastPrice ? 'bullish' : 'bearish' , totalBalance : +marketStateData[0].totalBalance , activeCurrencies : marketStateData[0].currencies , priceChange : (((+marketStateData[0].totalBalance)-(+marketStateData[1].totalBalance))/(+marketStateData[1].totalBalance))*100}
     console.log('its done' , marketStateData)
   }
 
@@ -173,14 +173,14 @@ export default function Home() {
               {/* Price Change */}
               <div className="flex flex-col items-center">
                 <span className="text-gray-400 text-sm mb-1">24h Change</span>
-                <span className={`text-xl font-bold ${
+                <span className={`text-4xl font-bold  ${
                   marketStateFinal.priceChange > 0 
                     ? 'text-green-400' 
                     : marketStateFinal.priceChange < 0 
                     ? 'text-red-400' 
                     : 'text-gray-400'
                 }`}>
-                  {marketStateFinal.priceChange > 0 ? '+' : ''}{marketStateFinal.priceChange.toFixed(2)}%
+                  {marketStateFinal.priceChange > 0 ? '+' : ''} {marketStateFinal.priceChange.toFixed(4)}%
                 </span>
               </div>
               <Divider className="lg:hidden md:hidden"></Divider> 
