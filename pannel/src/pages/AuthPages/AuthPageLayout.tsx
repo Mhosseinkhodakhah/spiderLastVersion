@@ -35,7 +35,7 @@ export default function AuthLayout({
         <div className="max-w-7xl mx-auto flex justify-between items-center p-4">
           <div className="flex items-center space-x-2">
             <SiCoinbase className="text-blue-400" size={24} />
-            <span className="font-bold text-xl text-blue-400">DeFi Wallet</span>
+            <span className="font-bold text-xl text-blue-400">spider crypto bot</span>
           </div>
           <div className="flex items-center space-x-4">
             <button 
@@ -62,7 +62,7 @@ export default function AuthLayout({
             {/* Logo and Brand Content */}
             <div className="relative mb-8">
               <SiCoinbase className="text-blue-400 mx-auto mb-6" size={64} />
-              <h1 className="text-4xl font-bold text-blue-400 mb-4">DeFi Wallet</h1>
+              <h1 className="text-4xl font-bold text-blue-400 mb-4">spider crypto bot</h1>
               <p className="text-gray-400 text-lg mb-6">
                 Crypto.com DeFi Extension
               </p>
@@ -107,7 +107,7 @@ export default function AuthLayout({
               {/* Mobile Logo - Only show on mobile */}
               <div className="lg:hidden text-center mb-8">
                 <SiCoinbase className="text-blue-400 mx-auto mb-4" size={48} />
-                <h2 className="text-2xl font-bold text-blue-400">DeFi Wallet</h2>
+                <h2 className="text-2xl font-bold text-blue-400">spider crypto bot</h2>
                 <p className="text-gray-400 text-sm mt-2">Crypto.com Extension</p>
               </div>
               
@@ -128,7 +128,7 @@ export default function AuthLayout({
                 </a>
               </div>
               <p className="text-gray-500 text-xs mt-4">
-                © 2024 Crypto.com DeFi Wallet. All rights reserved.
+                © 2024 Crypto.com spider crypto bot. All rights reserved.
               </p>
             </div>
           </div>
