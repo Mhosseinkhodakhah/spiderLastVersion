@@ -49,6 +49,7 @@ export default function Home() {
 
   if (marketState.isSuccess){
     marketStateData = marketState.data.data  
+    console.log('its hereeasasaasas' ,marketStateData )
     marketStateFinal = {marketStatus : +marketStateData[0].lastPrice > +marketStateData[1].lastPrice ? 'bullish' : 'bearish' , totalBalance : +marketStateData[0].totalBalance , activeCurrencies : marketStateData[0].currencies , priceChange : (((+marketStateData[0].totalBalance)-(+marketStateData[1].totalBalance))/(+marketStateData[1].totalBalance))*100}
     console.log('its done' , marketStateData)
   }

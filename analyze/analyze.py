@@ -44,7 +44,7 @@ class analyzor :
     
     
     def checkTheStatusOfPosition(self):
-        #requests.post(f'http://localhost:4000/market?state={self.state}&rsi={self.rsi}&lastPrice={self.lastPrice}')
+        requests.post(f'http://localhost:4000/market?state={self.state}&rsi={self.rsi}&lastPrice={self.lastPrice}')
         if (self.rsi < 30):
             if (self.state == 0):
                 self.state += 1
