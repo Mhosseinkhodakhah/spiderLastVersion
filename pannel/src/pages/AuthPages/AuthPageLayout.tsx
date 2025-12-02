@@ -64,7 +64,7 @@ export default function AuthLayout({
               <SiCoinbase className="text-blue-400 mx-auto mb-6" size={64} />
               <h1 className="text-4xl font-bold text-blue-400 mb-4">spider crypto bot</h1>
               <p className="text-gray-400 text-lg mb-6">
-                Crypto.com DeFi Extension
+                connected to nobitex
               </p>
             </div>
 
