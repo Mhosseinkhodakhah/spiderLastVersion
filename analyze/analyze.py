@@ -15,17 +15,19 @@ class analyzor :
 
 
     def start(self):
-        # requests.post(f'http://localhost:4000/market?state={self.state}&rsi={self.rsi}&lastPrice={self.lastPrice}')
         currentStateRespons = requests.get('http://localhost:4000/market')
         currentState = currentStateRespons.json()
-        self.state = int(currentState['data'][0]['state'])
-        self.lastPrice = float(currentState['data'][0]['lastPrice'])
-        print('its hereeeee' , currentState['data'][0]['state'] , currentState['data'][0]['lastPrice'])
-        allPrices = self.gettingPrices()
-        # print(allPrices.json()['data'])
-        self.rsi = self.calculateRSI(allPrices.json()['data'])
-        self.checkTheStatusOfPosition()
-        pass
+        if (len(currentState['data']) == 0):
+            requests.post(f'http://localhost:4000/market?state={self.state}&rsi={self.rsi}&lastPrice={self.lastPrice}')
+        else:
+            self.state = int(currentState['data'][0]['state'])
+            self.lastPrice = float(currentState['data'][0]['lastPrice'])
+            print('its hereeeee' , currentState['data'][0]['state'] , currentState['data'][0]['lastPrice'])
+            allPrices = self.gettingPrices()
+            # print(allPrices.json()['data'])
+            self.rsi = self.calculateRSI(allPrices.json()['data'])
+            self.checkTheStatusOfPosition()
+            pass
     
 
     def gettingPrices(self):
@@ -42,7 +44,7 @@ class analyzor :
     
     
     def checkTheStatusOfPosition(self):
-        requests.post(f'http://localhost:4000/market?state={self.state}&rsi={self.rsi}&lastPrice={self.lastPrice}')
+        #requests.post(f'http://localhost:4000/market?state={self.state}&rsi={self.rsi}&lastPrice={self.lastPrice}')
         if (self.rsi < 30):
             if (self.state == 0):
                 self.state += 1
