@@ -108,7 +108,7 @@ export class ApiCallService {
         }})
         
         let response = await rawResponse.json()
-
+        
         console.log('aftereee' , response)
         
         return response.transactions

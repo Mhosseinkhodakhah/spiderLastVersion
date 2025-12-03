@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { AppService } from './app.service';
-import { loginDto } from './dto/login.dto';
+import { loginDto, registerDto } from './dto/login.dto';
 import { timeFrameType } from './dto/types';
 
 @Controller()
@@ -43,7 +43,10 @@ export class AppController {
     return this.appService.login(body)
   }
 
-
+  @Post('register')
+  async registre(@Body() body : registerDto){
+    return this.appService.register(body)
+  }
 
   @Post('state')
   async setStateOfMarket(@Body() body : loginDto){

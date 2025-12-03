@@ -1,22 +1,26 @@
 import { Injectable } from '@nestjs/common';
 import { ApiCallService } from './api-call/api-call.service';
-import { loginDto } from './dto/login.dto';
+import { loginDto, registerDto } from './dto/login.dto';
 import { TokenizeService } from './tokenize/tokenize.service';
 import { timeFrameType } from './dto/types';
 import { market } from './entity/market.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { transActions } from './entity/transActions.entity';
+import { user } from './entity/user.entity';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AppService {
 
   constructor(
+    private saltOrRounds: number = 10,
     private apiCalService : ApiCallService,
     private tokenService : TokenizeService,
     @InjectRepository(market) private readonly marketRepo: Repository<market>,
 
-    @InjectRepository(transActions) private readonly transActionsRepo : Repository<transActions>
+    @InjectRepository(transActions) private readonly transActionsRepo : Repository<transActions>,
+    @InjectRepository(user) private readonly userRepo : Repository<user>,
   ){}
 
 
@@ -35,7 +39,35 @@ export class AppService {
    * @returns 
    */
   async login(body : loginDto){  
-    let token = await this.tokenService.tokenize({userName : body.userName} , '1H' , 0)
+
+    let user = await this.userRepo.findOne({
+      where : [{
+        userName : body.userName
+      } , {
+        phoneNumber : body.phoneNumber
+      }]
+    })
+
+    if (!user){
+      return {
+        success : false,
+        message : 'user not found!',
+        error : 'user not found!'
+      }
+    }
+
+
+    let compare =  await bcrypt.compare(body.password, user?.password)
+
+    if (!compare){
+      return {
+        success : false,
+        message : 'password is incorrect',
+        error : 'password is incorrect'
+      }
+    }
+
+    let token = await this.tokenService.tokenize({userName : user.userName , id : user.id , phoneNumber : user.phoneNumber} , '1H' , 0)
     return {
       success : true,
       data : {
@@ -43,6 +75,42 @@ export class AppService {
         access : token,
       }
     }
+  } 
+
+
+
+  /**
+   * for register
+   * @param body 
+   * @returns 
+   */
+  async register(body : registerDto){  
+
+    let user = await this.userRepo.find({
+      where : [{
+        phoneNumber : body.phoneNumber
+      } , {
+        userName : body.userName
+      }]
+    })
+
+    if (user.length>0){
+      return {
+        msg : 'user found!!!'
+      }
+    }
+
+    let hashPassword = await bcrypt.hash(body.password, this.saltOrRounds)
+
+    let newuser = this.userRepo.create(body)
+    newuser.password = hashPassword;
+    await this.userRepo.save(newuser)
+
+    return {
+      success : true,
+      data : newuser
+    }
+
   } 
 
 

@@ -10,6 +10,7 @@ import { TokenizeService } from './tokenize/tokenize.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { market } from './entity/market.entity';
 import { transActions } from './entity/transActions.entity';
+import { user } from './entity/user.entity';
 
 
 @Module({
@@ -24,13 +25,15 @@ import { transActions } from './entity/transActions.entity';
       database: 'sunelly',
       entities: [
         market,
-        transActions
+        transActions,
+        user
       ],
       synchronize: true,
     }),
     TypeOrmModule.forFeature([
       market,
-      transActions
+      transActions,
+      user
     ]),
     JwtModule.registerAsync({
       imports: [ConfigModule],  
