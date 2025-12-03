@@ -27,7 +27,7 @@ export class loginDto{
 
 
 export class registerDto{
-     @IsString()
+    @IsString()
     @IsNotEmpty()
     readonly userName : string
 

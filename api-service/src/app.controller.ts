@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query, ValidationPipe } from '@nestjs/common';
 import { AppService } from './app.service';
 import { loginDto, registerDto } from './dto/login.dto';
 import { timeFrameType } from './dto/types';
@@ -44,7 +44,7 @@ export class AppController {
   }
 
   @Post('register')
-  async registre(@Body() body : registerDto){
+  async registre(@Body(new ValidationPipe()) body : registerDto){
     return this.appService.register(body)
   }
 
