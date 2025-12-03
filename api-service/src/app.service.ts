@@ -13,8 +13,8 @@ import * as bcrypt from 'bcrypt';
 @Injectable()
 export class AppService {
 
+  private saltOrRounds: number = 10;
   constructor(
-    private saltOrRounds: number = 10,
     private apiCalService : ApiCallService,
     private tokenService : TokenizeService,
     @InjectRepository(market) private readonly marketRepo: Repository<market>,
