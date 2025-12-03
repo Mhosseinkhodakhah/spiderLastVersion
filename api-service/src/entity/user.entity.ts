@@ -15,22 +15,22 @@ export class user {
     @Column({ type: 'varchar' })
     lastName: string;
 
-    @Column({ type: 'varchar' })
+    @Column({ type: 'varchar' , nullable : true})
     nationalCode: string;
 
-    @Column({ type: 'varchar' })
+    @Column({ type: 'varchar' , nullable : true})
     apiToken: string;
 
-    @Column({ type: 'varchar' })
-    isConnected: string;
+    @Column({ type: 'bool' , default : true})
+    isConnected: boolean;
 
-    @Column({ type: 'varchar' })
+    @Column({ type: 'varchar' , nullable : true})
     userName: string;
 
     @Column({ type: 'varchar' })
     password: string;
 
-    @Column({ type: 'varchar' })
+    @Column({ type: 'varchar' , nullable : true})
     phoneNumber: string;
 
     @Column({ type: 'varchar' })

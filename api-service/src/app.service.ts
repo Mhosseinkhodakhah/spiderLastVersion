@@ -104,6 +104,9 @@ export class AppService {
 
     let newuser = this.userRepo.create(body)
     newuser.password = hashPassword;
+    newuser.date = new Date().toLocaleString("fa-IR").split(',')[0]
+    newuser.time = new Date().toLocaleString("fa-IR").split(',')[1]
+    newuser.milisecond = new Date().getTime().toString()
     await this.userRepo.save(newuser)
 
     return {
