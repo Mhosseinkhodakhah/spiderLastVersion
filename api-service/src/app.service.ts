@@ -44,7 +44,7 @@ export class AppService {
       where : [{
         userName : body.userName
       } , {
-        phoneNumber : body.phoneNumber
+        phoneNumber : body.userName
       }]
     })
 
