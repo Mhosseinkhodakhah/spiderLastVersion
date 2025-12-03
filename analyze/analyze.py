@@ -89,4 +89,4 @@ instance = analyzor()
 
 while True:
     instance.start()
-    time.sleep(60*30)
+    time.sleep(60*10)
