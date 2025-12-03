@@ -117,8 +117,8 @@ export default function Home() {
               : 'bg-gradient-to-r from-blue-500/10 to-purple-500/10 border-blue-500/30'
           }`}>
           {/* Market Status Indicator */}
-          <div className="mt-4 w-full md:mt-0 flex items-center space-x-2">
-            <div className={`w-full flex font-bold text-xl flex-row h-3  rounded-full justify-center text-green-400 text-center animate-pulse`}>
+          <div className="mt-4 w-full md:mt-0 flex p-3 items-center space-x-2">
+            <div className={`w-full flex font-bold text-3xl  flex-row h-3  rounded-full justify-center text-green-400 text-center animate-pulse`}>
 
               {`STEP ${marketStateFinal.state}`}
 
@@ -161,7 +161,7 @@ export default function Home() {
             </div>
             <Divider className="lg:hidden md:hidden py-2"></Divider>
 
-            <div className="grid grid-cols-1 md:grid-cols-5 gap-6 text-center">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 text-center">
               {/* Total Balance */}
               <div className="flex flex-col items-center">
                 <span className="text-gray-400 text-sm mb-1">Total Balance</span>
@@ -173,7 +173,7 @@ export default function Home() {
 
               <div className="flex flex-col  items-center">
                 <span className="text-gray-400 text-sm mb-1">RSI</span>
-                <span className="text-xl font-bold text-white">
+                <span className={`text-3xl w-full font-bold text-white ${+marketStateFinal.rsi > 70 ? 'animate-pulse bg-red-400 rounded-md border border-gray' : +marketStateFinal.rsi < 30 ? 'animate-pulse bg-green-400 rounded-md border border-gray' : ''}  `}>
                   {(+marketStateFinal.rsi).toFixed(2)}
                 </span>
               </div>
@@ -216,7 +216,7 @@ export default function Home() {
                     : 'bg-gradient-to-r from-blue-400 to-purple-400'
                 }`}
               style={{
-                width: `${Math.min(Math.abs(marketStateFinal.priceChange) * 10, 100)}%`
+                width: `${Math.min(Math.abs(marketStateFinal.priceChange), 100)}%`
               }}
             ></div>
           </div>
