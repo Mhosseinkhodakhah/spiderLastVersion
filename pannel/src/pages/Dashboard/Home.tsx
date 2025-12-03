@@ -13,6 +13,7 @@ export default function Home() {
   });
 
 
+
   const priceData = useQuery({
     queryKey: ["getPrice"],
     queryFn: price,
@@ -29,6 +30,8 @@ export default function Home() {
     queryKey: ["getMarket"],
     queryFn: market,
   });
+
+  const [btcPrice, setBtcPrice] = useState<string>(''); 
 
   let queryPrice: any;
 
@@ -67,7 +70,17 @@ export default function Home() {
 
   if (priceData.isSuccess) {
     queryPrice = priceData.data.data
-    console.log('check the api222>>>', queryPrice.data);
+    console.log('check the api222>>>', queryPrice);
+  }
+
+  let btcDollar = 0
+
+  for (let i of data){
+    if (Object.keys(i)[0] === 'BTC'){
+      let balance = +i.BTC.balance
+      let btcVolum = (balance * queryPrice[queryPrice.length - 1]).toString()
+      btcDollar = +(+btcVolum).toFixed(2)
+    }
   }
 
   // Add loading state
@@ -119,9 +132,10 @@ export default function Home() {
           {/* Market Status Indicator */}
           <div className="mt-4 w-full md:mt-0 flex p-3 items-center space-x-2">
             <div className={`w-full flex font-bold text-3xl  flex-row h-3  rounded-full justify-center text-green-400 text-center animate-pulse`}>
-
-              {`STEP ${marketStateFinal.state}`}
-
+              {marketStateFinal.state === 1 ? 'پله اول' : marketStateFinal.state === 2 ? 'پله دوم' : marketStateFinal.state === 3 ? 'پله چهارم' : 'حجم پایه'}
+            </div>
+             <div className={`w-full flex font-bold text-3xl  flex-row h-3  rounded-full justify-center text-green-400 text-center animate-pulse`}>
+              {`POSITION`}
             </div>
           </div>
           <Divider className="py-2 mt-5"></Divider>
@@ -161,12 +175,19 @@ export default function Home() {
             </div>
             <Divider className="lg:hidden md:hidden py-2"></Divider>
 
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 text-center">
+            <div className="grid grid-cols-1 md:grid-cols-5 gap-6 text-center">
               {/* Total Balance */}
               <div className="flex flex-col items-center">
                 <span className="text-gray-400 text-sm mb-1">Total Balance</span>
-                <span className="text-xl font-bold text-white">
+                <span className="text-3xl font-bold text-white">
                   ${marketStateFinal.totalBalance.toFixed(2)}
+                </span>
+              </div>
+              <Divider className="lg:hidden md:hidden py-2 mt-2"></Divider>
+               <div className="flex flex-col items-center">
+                <span className="text-gray-400 text-sm mb-1">In Position</span>
+                <span className="text-3xl font-bold text-white">
+                  ${btcDollar.toFixed(2)}
                 </span>
               </div>
               <Divider className="lg:hidden md:hidden py-2 mt-2"></Divider>
