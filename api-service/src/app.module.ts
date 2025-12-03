@@ -9,6 +9,7 @@ import { ConfigService } from '@nestjs/config';
 import { TokenizeService } from './tokenize/tokenize.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { market } from './entity/market.entity';
+import { transActions } from './entity/transActions.entity';
 
 
 @Module({
@@ -22,12 +23,14 @@ import { market } from './entity/market.entity';
       password: 'hosseinkh1376',
       database: 'sunelly',
       entities: [
-        market
+        market,
+        transActions
       ],
       synchronize: true,
     }),
     TypeOrmModule.forFeature([
-      market
+      market,
+      transActions
     ]),
     JwtModule.registerAsync({
       imports: [ConfigModule],  

@@ -97,6 +97,11 @@ export class ApiCallService {
     }
 
 
+
+    /**
+     * this is for geting all transActions
+     * @returns 
+     */
     async transActions(){
         let rawResponse = await fetch(`${this.url.transAcions}` , {method : 'GET' , headers : {
             Authorization : this.token
@@ -105,7 +110,7 @@ export class ApiCallService {
         let response = await rawResponse.json()
 
         console.log('aftereee' , response)
-
+        
         return response.transactions
     }
 

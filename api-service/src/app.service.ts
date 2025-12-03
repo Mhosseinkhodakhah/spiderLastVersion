@@ -6,6 +6,7 @@ import { timeFrameType } from './dto/types';
 import { market } from './entity/market.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { transActions } from './entity/transActions.entity';
 
 @Injectable()
 export class AppService {
@@ -14,6 +15,8 @@ export class AppService {
     private apiCalService : ApiCallService,
     private tokenService : TokenizeService,
     @InjectRepository(market) private readonly marketRepo: Repository<market>,
+
+    @InjectRepository(transActions) private readonly transActionsRepo : Repository<transActions>
   ){}
 
 
@@ -68,16 +71,33 @@ export class AppService {
   }
 
 
+  /**
+   * this is for geting transActions
+   * @returns 
+   */
   async getTransActions(){
-    let trs = await this.apiCalService.transActions()
-
+    let all;
+    let allTransActions = await this.transActionsRepo.find()
+    if (allTransActions.length <= 0){
+      all = await this.apiCalService.transActions()
+    }else{
+      all = allTransActions
+    }
     return {
       success : true,
-      data : trs
+      data : all
     }
   }
 
 
+
+  /**
+   * this is for seting state by analyzor service
+   * @param state 
+   * @param rsi 
+   * @param lastPrice 
+   * @returns 
+   */
   async setState(state : number , rsi : string , lastPrice : string){
 
     console.log('its rsi' , state , rsi)
