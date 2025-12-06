@@ -169,14 +169,17 @@ export class AppService {
    * @param lastPrice 
    * @returns 
    */
-  async setState(state : number , rsi : string , lastPrice : string){
+  async setState(state : number , rsi : string , lastPrice : string , lastState : number , lastSellPrice : string , lastBuyPrice : string){
 
-    console.log('its rsi' , state , rsi)
+    console.log('its rsi' , lastSellPrice, lastBuyPrice)
 
     let marketSituation = this.marketRepo.create({
       state : +state,
       rsi:rsi.toString(),
-      lastPrice : lastPrice
+      lastPrice : lastPrice,
+      lastState ,
+      lastSellPrice,
+      lastBuyPrice
     })
     
     let currencies = await this.apiCalService.getCurrencies(1)

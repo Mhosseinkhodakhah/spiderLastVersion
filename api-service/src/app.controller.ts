@@ -33,11 +33,10 @@ export class AppController {
 
 
   @Post('/market')
-  setState(@Query('state') state : number , @Query('rsi') rsi : string , @Query('lastPrice') lastPrice : string): {} {
-    return this.appService.setState(state , rsi , lastPrice);
+  setState(@Query('state') state : number , @Query('rsi') rsi : string , @Query('lastPrice') lastPrice : string , @Query('lastSellPrice') lastSellPrice : string , @Query('lastBuyPrice') lastBuyPrice : string , @Query('lastState') lastState : number): {} {
+    return this.appService.setState(state , rsi , lastPrice , lastState ,lastSellPrice , lastBuyPrice);
   }
 
-  
   @Post('login')
   async login(@Body() body : loginDto){
     return this.appService.login(body)

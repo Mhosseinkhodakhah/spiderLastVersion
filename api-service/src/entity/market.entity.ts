@@ -11,6 +11,9 @@ export class market {
     @Column({ type: 'int' , default : 0})
     state: number
 
+    @Column({ type: 'int' , default : 0})
+    lastState: number
+
     @Column({type : 'varchar' , default : '45'})
     rsi : string
 
@@ -25,6 +28,13 @@ export class market {
 
     @Column({type : 'varchar' , default : '0'})
     lastPrice : string
+
+    @Column({type : 'varchar' , default : '0'})
+    lastSellPrice : string
+
+
+    @Column({type : 'varchar' , default : '0'})
+    lastBuyPrice : string
 
     @CreateDateColumn()
     createdAt: Date;
