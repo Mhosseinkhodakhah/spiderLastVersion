@@ -138,6 +138,8 @@ class analyzor :
                 pass
         else : 
             print('market is stable' , self.state , self.lastSellPrice , self.lastState , self.lastBuyPrice , self.lastPrice)
+            if (self.state < 0):
+                self.state = 0
             requests.post(f'http://localhost:4000/market?state={self.state}&rsi={self.rsi}&lastPrice={self.lastPrice}&lastSellPrice={self.lastSellPrice}&lastBuyPrice={self.lastBuyPrice}&lastState={self.lastState}')
     
 
