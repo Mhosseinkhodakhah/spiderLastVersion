@@ -329,7 +329,6 @@ export default function Home() {
                     {/* Status */}
                     {history.description && (
                       <div className="flex justify-between">
-                        <span className="text-gray-400">description:</span>
                         <span className={`px-2 py-1 rounded text-xs ${(history.description.includes('خرید') || history.description.includes('واریز')) ? 'bg-green-500/20 text-green-400' :
                           history.status === 'pending' ? 'bg-yellow-500/20 text-yellow-400' :
                             'bg-red-500/20 text-red-400'
