@@ -39,6 +39,11 @@ export default function Home() {
 
   let marketStateData: any;
 
+  if (historyData.isError){
+    Histories = []
+  }
+
+
   if (historyData.isFetching) {
     return (
       <div className="flex items-center justify-center h-64">
@@ -47,12 +52,13 @@ export default function Home() {
     );
   }
 
-  let marketStateFinal = { state: 0, marketStatus: 'bearish', totalBalance: 0, activeCurrencies: 0, priceChange: 0, rsi: 0 }
+
+  let marketStateFinal = {lastSellPrice : 0 , lastBuyPrice : 0 , lastState : 0 ,state: 0, marketStatus: 'bearish', totalBalance: 0, activeCurrencies: 0, priceChange: 0, rsi: 0 }
 
   if (marketState.isSuccess) {
     marketStateData = marketState.data.data
     console.log('its hereeasasaasas', marketStateData)
-    marketStateFinal = { state: marketStateData[0].state, marketStatus: (((+marketStateData[0].totalBalance) - (+marketStateData[marketStateData.length - 1].totalBalance)) / (+marketStateData[marketStateData.length - 1].totalBalance)) * 100 > 0 ? 'bullish' : 'bearish', totalBalance: +marketStateData[0].totalBalance, activeCurrencies: marketStateData[0].currencies, priceChange: (((+marketStateData[0].totalBalance) - (+marketStateData[marketStateData.length - 1].totalBalance)) / (+marketStateData[marketStateData.length - 1].totalBalance)) * 100, rsi: marketStateData[0].rsi }
+    marketStateFinal = {lastBuyPrice : marketStateData[0].lastBuyPrice ,lastSellPrice : marketStateData[0].lastSellPrice , lastState : marketStateData[0].lastState , state: marketStateData[0].state, marketStatus: (((+marketStateData[0].totalBalance) - (+marketStateData[marketStateData.length - 1].totalBalance)) / (+marketStateData[marketStateData.length - 1].totalBalance)) * 100 > 0 ? 'bullish' : 'bearish', totalBalance: +marketStateData[0].totalBalance, activeCurrencies: marketStateData[0].currencies, priceChange: (((+marketStateData[0].totalBalance) - (+marketStateData[marketStateData.length - 1].totalBalance)) / (+marketStateData[marketStateData.length - 1].totalBalance)) * 100, rsi: marketStateData[0].rsi }
     console.log('its done', marketStateData)
   }
 
@@ -121,8 +127,6 @@ export default function Home() {
     <div className="p-6">
       {/* Market State Card - Always Visible */}
       <div className="mb-8">
-
-
         <div className={`relative overflow-hidden rounded-2xl p-6 border-2 backdrop-blur-sm ${marketStateFinal.marketStatus === 'bullish'
             ? 'bg-gradient-to-r from-green-500/10 to-emerald-500/10 border-green-500/30'
             : marketStateFinal.marketStatus === 'bearish'
@@ -130,15 +134,6 @@ export default function Home() {
               : 'bg-gradient-to-r from-blue-500/10 to-purple-500/10 border-blue-500/30'
           }`}>
           {/* Market Status Indicator */}
-          <div className="mt-4 w-full md:mt-0 flex p-3 items-center space-x-2">
-            <div className={`w-full flex font-bold text-3xl  flex-row h-3  rounded-full justify-center text-green-400 text-center animate-pulse`}>
-              {marketStateFinal.state === 1 ? 'پله اول' : marketStateFinal.state === 2 ? 'پله دوم' : marketStateFinal.state === 3 ? 'پله چهارم' : 'حجم پایه'}
-            </div>
-             <div className={`w-full flex font-bold text-3xl  flex-row h-3  rounded-full justify-center text-green-400 text-center animate-pulse`}>
-              {`POSITION`}
-            </div>
-          </div>
-          <Divider className="py-2 mt-5"></Divider>
 
           <div className="mt-4 md:mt-0 flex items-center space-x-2">
             <div className={`w-3 h-3 rounded-full animate-pulse ${marketStateFinal.marketStatus === 'bullish'
@@ -175,7 +170,7 @@ export default function Home() {
             </div>
             <Divider className="lg:hidden md:hidden py-2"></Divider>
 
-            <div className="grid grid-cols-1 md:grid-cols-5 gap-6 text-center">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 text-center">
               {/* Total Balance */}
               <div className="flex flex-col items-center">
                 <span className="text-gray-400 text-sm mb-1">Total Balance</span>
@@ -208,27 +203,16 @@ export default function Home() {
               </div>
               {/* <div className="flex flex-col items-center">
               </div> */}
-              <Divider className="lg:hidden md:hidden"></Divider>
+              {/* <Divider className="lg:hidden md:hidden"></Divider> */}
               {/* Price Change */}
-              <div className="flex flex-col items-center">
-                <span className="text-gray-400 text-sm mb-1">24h Change</span>
-                <span className={`text-4xl font-bold  ${marketStateFinal.priceChange > 0
-                    ? 'text-green-400'
-                    : marketStateFinal.priceChange < 0
-                      ? 'text-red-400'
-                      : 'text-gray-400'
-                  }`}>
-                  {marketStateFinal.priceChange > 0 ? '+' : ''} {marketStateFinal.priceChange.toFixed(4)}%
-                </span>
-              </div>
 
-              <Divider className="lg:hidden md:hidden"></Divider>
+              {/* <Divider className="lg:hidden md:hidden"></Divider> */}
             </div>
 
           </div>
 
           {/* Progress bar for visual indicator */}
-          <div className="mt-4 w-full bg-gray-700/50 rounded-full h-2">
+          {/* <div className="mt-4 w-full bg-gray-700/50 rounded-full h-2">
             <div
               className={`h-2 rounded-full transition-all duration-1000 ${marketStateFinal.marketStatus === 'bullish'
                   ? 'bg-gradient-to-r from-green-400 to-emerald-400'
@@ -240,11 +224,123 @@ export default function Home() {
                 width: `${Math.min(Math.abs(marketStateFinal.priceChange), 100)}%`
               }}
             ></div>
-          </div>
+          </div> */}
         </div>
       </div>
 
-      <h1 className="text-2xl font-bold text-blue-400 mb-6">Wallet Balances</h1>
+
+      <div className="mb-8">
+        <div className={`relative overflow-hidden rounded-2xl p-6 border-5 shadow-md shadow-white  bg-gradient-to-r from-white-500/10 to-green-500/10 border`}>
+                {/* 'bg-gradient-to-r from-blue-500/10 to-purple-500/10 border-blue-500/30' */}
+          {/* Market Status Indicator */}
+          
+
+          {/* <Divider className="py-5 mt-5"></Divider> */}
+
+          {/* Animated background elements */}
+          {/* <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-pulse"></div> */}
+
+          <div className="flex flex-col md:flex-row justify-between items-center">
+
+            <div className="text-center md:text-left mb-4 md:mb-0">
+              <h2 className="text-2xl font-bold text-white mb-2">
+                آخرین وضعیت
+              </h2>
+            </div>
+            <Divider className="lg:hidden md:hidden py-2"></Divider>
+
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 text-center">
+              {/* Total Balance */}
+              <div className="flex flex-col items-center">
+                <span className=" text-sm mb-1 animate-pulse bg-green-400 text-black w-full rounded-md border border-gray">آخرین قیمت خرید</span>
+                <span className="text-2xl font-bold text-white">
+                  {marketStateFinal.lastBuyPrice == 0 ? '0' : `$ ${marketStateFinal.lastBuyPrice.toFixed(2)}` }
+                </span>
+              </div>
+              <Divider className="lg:hidden md:hidden py-2 mt-2"></Divider>
+               <div className="flex flex-col items-center">
+                <span className=" text-sm mb-1 animate-pulse bg-red-400 rounded-md border border-gray text-black w-full">آخرین قیمت فروش</span>
+                <span className="text-2xl font-bold text-white">
+                  {marketStateFinal.lastSellPrice == 0 ? '0' : `$ ${marketStateFinal.lastSellPrice.toFixed(2)}` }
+                </span>
+              </div>
+              <Divider className="lg:hidden md:hidden py-2 mt-2"></Divider>
+
+              <div className="flex flex-col  items-center">
+                <span className="text-gray-400 text-sm mb-1">RSI</span>
+                <span className={`text-3xl w-full font-bold text-white ${+marketStateFinal.rsi > 70 ? 'animate-pulse bg-red-400 rounded-md border border-gray' : +marketStateFinal.rsi < 30 ? 'animate-pulse bg-green-400 rounded-md border border-gray' : ''}  `}>
+                  {(+marketStateFinal.rsi).toFixed(2)}
+                </span>
+              </div>
+              <Divider className="lg:hidden md:hidden"></Divider>
+              {/* Active Currencies */}
+              {/* <div className="flex flex-col items-center">
+                <span className="text-gray-400 text-sm mb-1">تعداد سبد</span>
+                <span className="text-xl font-bold text-blue-400">
+                  {marketStateFinal.activeCurrencies}
+                </span>
+              </div> */}
+              {/* <div className="flex flex-col items-center">
+              </div> */}
+              {/* <Divider className="lg:hidden md:hidden"></Divider> */}
+              {/* Price Change */}
+              <div className="flex flex-col items-center">
+                <span className="text-gray-400 text-sm mb-1">درصد تغییرات</span>
+                <span className={`text-4xl font-bold  ${marketStateFinal.priceChange > 0
+                    ? 'text-green-400'
+                    : marketStateFinal.priceChange < 0
+                      ? 'text-red-400'
+                      : 'text-gray-400'
+                  }`}>
+                  {marketStateFinal.priceChange > 0 ? '+' : ''} {marketStateFinal.priceChange.toFixed(4)}%
+                </span>
+              </div>
+
+              {/* <Divider className="lg:hidden md:hidden"></Divider> */}
+            </div>
+
+          </div>
+
+          <div className="mt-4 w-full bg-yellow-100 rounded-full h-2">
+            <div
+              className={`h-2 rounded-full transition-all duration-1000 ${marketStateFinal.marketStatus === 'bullish'
+                ? 'bg-gradient-to-r from-green-400 to-emerald-400'
+                : marketStateFinal.marketStatus === 'bearish'
+                  ? 'bg-gradient-to-r from-red-800 to-black'
+                  : 'bg-gradient-to-r from-blue-400 to-black'
+                }`}
+              style={{
+                width: `${Math.min(Math.abs(marketStateFinal.priceChange), 100)}%`
+              }}
+            ></div>
+          </div>
+
+              <Divider className="py-2 mt-5"></Divider>
+          
+          <div className="mt-4 w-full mb-6 md:mt-0 flex p-3 items-center space-x-2 ">
+             <div className={`w-full flex font-bold text-md lg:text-3xl  flex-row h-3  rounded-full justify-center text-green-400 text-center animate-pulse`}>
+              {`حجم وارد شده`}
+            </div>
+            <div className={`w-full flex font-bold text-md lg:text-3xl flex-row h-3  rounded-full justify-center text-green-400 text-center animate-pulse`}>
+              {`آخرین اکشن`}
+            </div>
+          </div>
+
+          <div className="mt-4 w-full mb-5 md:mt-0 flex p-3 items-center space-x-2">
+            <div className={`w-full flex font-bold text-md lg:text-3xl  flex-row h-3  rounded-full justify-center text-green-400 text-center animate-pulse`}>
+              {marketStateFinal.state === 1 ? 'پله اول' : marketStateFinal.state === 2 ? 'پله دوم' : marketStateFinal.state === 3 ? 'پله سوم' : 'حجم پایه'}
+            </div>
+            <div className={`w-full flex font-bold text-md lg:text-3xl  flex-row h-3  rounded-full justify-center text-green-400 text-center animate-pulse`}>
+              {marketStateFinal.lastState == 0 ? 'فروش' : 'خرید' }
+            </div>
+          </div>
+          {/* <Divider className="py-2 mt-5 mb-5"></Divider> */}
+            
+          {/* Progress bar for visual indicator */}
+        </div>
+      </div>
+
+      <h1 className="text-2xl font-bold text-center text-blue-400 mb-6">Wallet Balances</h1>
       {data.length === 0 ? (
         <div className="text-gray-400 text-center py-8">
           No balances found
