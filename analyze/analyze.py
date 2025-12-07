@@ -295,7 +295,7 @@ instance = analyzor()
 while True:
     myobj = datetime.now()
     minute = myobj.minute
-    if (int(minute) == 59):
+    if (int(minute) == 29):
         print('==========================================================')
         print('start the runner')
         print('==========================================================')
