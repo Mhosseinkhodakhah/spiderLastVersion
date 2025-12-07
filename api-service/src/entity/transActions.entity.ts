@@ -14,7 +14,7 @@ export class transActions {
 
     @Column({ type: 'varchar' })
     nobitexId: string;
-
+    
     @Column({ type: 'varchar' })
     amount: string;
 
