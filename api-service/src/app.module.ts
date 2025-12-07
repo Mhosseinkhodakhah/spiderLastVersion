@@ -11,6 +11,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { market } from './entity/market.entity';
 import { transActions } from './entity/transActions.entity';
 import { user } from './entity/user.entity';
+import { JwtStrategy } from './auth/jwt.strategy';
 
 
 @Module({
@@ -45,6 +46,6 @@ import { user } from './entity/user.entity';
     }),
   ],
   controllers: [AppController],
-  providers: [AppService, ApiCallService, TokenizeService],
+  providers: [AppService, ApiCallService, JwtStrategy ,TokenizeService],
 })
 export class AppModule {}
