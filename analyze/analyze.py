@@ -303,6 +303,6 @@ while True:
         time.sleep(60*10)
     else:
         print('==========================================================')
-        print('script is sleep yet' , str(myobj.minute))
+        print('script is sleep yet' , type(myobj.minute))
         print('==========================================================')
         time.sleep(60*10)
