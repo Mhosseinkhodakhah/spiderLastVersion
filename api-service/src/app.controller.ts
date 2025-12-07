@@ -31,14 +31,14 @@ export class AppController {
 
 
   @Get('/market')
-  @UseGuards(AuthGuard)
+  // @UseGuards(AuthGuard)
   getState(): {} {
     return this.appService.getState();
   }
 
 
   @Post('/market')
-  @UseGuards(AuthGuard)
+  // @UseGuards(AuthGuard)
   setState(@Query('state') state : number , @Query('rsi') rsi : string , @Query('lastPrice') lastPrice : string , @Query('lastSellPrice') lastSellPrice : string , @Query('lastBuyPrice') lastBuyPrice : string , @Query('lastState') lastState : number): {} {
     return this.appService.setState(state , rsi , lastPrice , lastState ,lastSellPrice , lastBuyPrice);
   }
@@ -56,7 +56,7 @@ export class AppController {
   }
 
   @Post('state')
-  @UseGuards(AuthGuard)
+  // @UseGuards(AuthGuard)
   async setStateOfMarket(@Body() body : loginDto){
     return this.appService.login(body)
   }
