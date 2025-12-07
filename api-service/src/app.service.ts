@@ -148,7 +148,9 @@ export class AppService {
    */
   async getTransActions(){
     let all;
-    let allTransActions = await this.transActionsRepo.find()
+    let allTransActions = await this.transActionsRepo.find({
+      order : {created_at : 'DESC'}
+    })
     if (allTransActions.length <= 0) {
       all = await this.apiCalService.transActions()
       for (let i of all) {
