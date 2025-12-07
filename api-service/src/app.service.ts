@@ -282,15 +282,15 @@ export class AppService {
 
     // let allDeleted = ['09632d2f-99ba-47bf-aea6-f646f72ea20e' , 'd7dc8e33-a91f-41db-a37f-6ce4c2de7085' , '']
 
-    let allD = await this.marketRepo.find({
-      where : [{
-        state : 0
-      } , {
-        state : -1
-      }]
-    })
+    // let allD = await this.marketRepo.find({
+    //   where : [{
+    //     state : 0
+    //   } , {
+    //     state : -1
+    //   }]
+    // })
 
-    await this.marketRepo.remove(allD)
+    // await this.marketRepo.remove(allD)
 
     return {
       success : true,
