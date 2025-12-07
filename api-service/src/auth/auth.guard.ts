@@ -23,6 +23,7 @@ export class AuthGuard implements CanActivate {
         request.user = decode
         return true;
       } catch (error) {
+        console.log('errror in deconding token' , error)
         return false
       }
     }else{
