@@ -61,4 +61,10 @@ export class AppController {
     return this.appService.login(body)
   }
 
+  @Get('/transactions/update')
+  // @UseGuards(JwtAuthGuard)
+  updateTransActions(): {} {
+    return this.appService.updateTransActions();
+  }
+
 }

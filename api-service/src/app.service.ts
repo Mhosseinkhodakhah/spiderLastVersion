@@ -182,6 +182,50 @@ export class AppService {
 
 
   /**
+   * this is for update transActions
+   * @returns 
+   */
+  async updateTransActions(){
+    let all;
+    // if (allTransActions.length <= 0) {
+      all = await this.apiCalService.transActions()
+      for (let i of all) {
+        let exist = await this.transActionsRepo.exists({
+          where : {
+            nobitexId : i.id
+          }
+        })
+        if (!exist){
+          let data = {
+            nobitexId: i.id.toString(),
+            amount: i.amount,
+            description: i.description,
+            created_at: i.created_at,
+            balance: i.balance,
+            tp: i.tp,
+            calculatedFee: i.calculatedFee,
+            type: i.type,
+            currency: i.currency,
+            date: new Date().toLocaleString('fa-IR').split(',')[0],
+            time: new Date().toLocaleString('fa-IR').split(',')[1],
+            milisecond: new Date().getTime().toString()
+          }
+          let createdTr = this.transActionsRepo.create(data)
+          await this.transActionsRepo.save(createdTr)
+        }
+      }
+    // }else{
+    //   // let currentTime = new Date().getTime()
+    //   all = allTransActions
+    // }
+    return {
+      success : true,
+      data : 'done'
+    }
+  }
+
+
+  /**
    * this is for seting state by analyzor service
    * @param state 
    * @param rsi 
