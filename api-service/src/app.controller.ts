@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Query, UseGuards, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query, Req, UseGuards, ValidationPipe } from '@nestjs/common';
 import { AppService } from './app.service';
 import { loginDto, registerDto } from './dto/login.dto';
 import { timeFrameType } from './dto/types';
@@ -11,7 +11,9 @@ export class AppController {
 
   @Get('balances')
   @UseGuards(JwtAuthGuard)
-  getBalances(): {} {
+  getBalances(@Req() req : any) {
+    const user = req.user;
+    console.log('its user' , user)
     return this.appService.getBalances();
   }
 

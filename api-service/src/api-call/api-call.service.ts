@@ -33,7 +33,7 @@ export class ApiCallService {
                 body: JSON.stringify(body)
             })
             let response = await rawResponse.json()
-            console.log('response is >>>> ', response)
+            // console.log('response is >>>> ', response)
             return response
         } else if (type === 1) {
             let url = this.url.currencies
@@ -47,7 +47,7 @@ export class ApiCallService {
                 status: string,
                 wallets: any
             } = await rawResponse.json()
-            console.log('response is >>>> ', response)
+            // console.log('response is >>>> ', response)
 
             let allData: {}[] = [];
 
@@ -85,13 +85,13 @@ export class ApiCallService {
         
         let currentTime = (new Date().getTime()/1000).toFixed()
         
-        console.log(`${this.url.price}?symbol=${currency}&resolution=${timeFrame ? timeFrame : 60}&to=${currentTime}`)
+        // console.log(`${this.url.price}?symbol=${currency}&resolution=${timeFrame ? timeFrame : 60}&to=${currentTime}`)
 
         let rawResponse = await fetch(`${this.url.price}?symbol=${currency}&resolution=${timeFrame ? timeFrame : 60}&to=${currentTime}` , {method : 'GET'})
         
         let response = await rawResponse.json()
 
-        console.log('data issss' , response)
+        // console.log('data issss' , response)
         let data : string [] = response.c
         return data
     }
@@ -109,7 +109,7 @@ export class ApiCallService {
         
         let response = await rawResponse.json()
         
-        console.log('aftereee' , response)
+        // console.log('aftereee' , response)
         
         return response.transactions
     }

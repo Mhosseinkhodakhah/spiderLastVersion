@@ -171,7 +171,7 @@ export class AppService {
    */
   async setState(state : number , rsi : string , lastPrice : string , lastState : number , lastSellPrice : string , lastBuyPrice : string){
 
-    console.log('its rsi' , lastSellPrice, lastBuyPrice)
+    // console.log('its rsi' , lastSellPrice, lastBuyPrice)
 
     let marketSituation = this.marketRepo.create({
       state : +state,
@@ -189,7 +189,7 @@ export class AppService {
     let totalBalance = 0
     
     for (let i of Object.keys(currencies)){
-      console.log('datata' , Object.keys(currencies[i])[0])
+      // console.log('datata' , Object.keys(currencies[i])[0])
       if (Object.keys(currencies[i])[0] != 'RLS' && Object.keys(currencies[i])[0] != 'USDT'){
         currenciesCount+=1
         let price = await this.apiCalService.getPrice(`${Object.keys(currencies[i])[0]}USDT`)
