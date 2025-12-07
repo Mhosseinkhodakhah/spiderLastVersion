@@ -291,6 +291,17 @@ class analyzor :
             return False
         
     def updateState(self):
+        currentStateRespons = requests.get('http://localhost:4000/market')
+        currentState = currentStateRespons.json()
+        if (len(currentState['data']) == 0):
+            requests.post(f'http://localhost:4000/market?state={self.state}&rsi={self.rsi}&lastPrice={self.lastPrice}&lastSellPrice={self.lastSellPrice}&lastBuyPrice={self.lastBuyPrice}&lastState={self.lastState}')
+        else:
+            self.state = int(currentState['data'][0]['state'])
+            self.lastPrice = float(currentState['data'][0]['lastPrice'])
+            self.lastSellPrice = float(currentState['data'][0]['lastSellPrice']) if 'lastSellPrice' in currentState['data'][0] else 0
+            self.lastBuyPrice = float(currentState['data'][0]['lastBuyPrice']) if 'lastBuyPrice' in currentState['data'][0] else 0
+            self.lastState = int(currentState['data'][0]['lastState']) if 'lastState' in currentState['data'][0] else 0
+        
         allPrices = self.gettingPrices()
         self.rsi = self.calculateRSI(allPrices.json()['data'])
         requests.post(f'http://localhost:4000/market?state={self.state}&rsi={self.rsi}&lastPrice={self.lastPrice}&lastSellPrice={self.lastSellPrice}&lastBuyPrice={self.lastBuyPrice}&lastState={self.lastState}')
@@ -308,6 +319,12 @@ while True:
         print('==========================================================')
         instance.start()
         time.sleep(60*45)
+    elif (int(minute) == 59 or int(minute) == 45 or int(minute) == 15):
+       
+       print('==========================================================')
+       print('script is sleep yet' , myobj.minute)
+       print('==========================================================')
+       instance.updateState()
     else:
         print('==========================================================')
         print('script is sleep yet' , myobj.minute)
