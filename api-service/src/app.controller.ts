@@ -17,7 +17,7 @@ export class AppController {
 
 
   @Get('price')
-  @UseGuards(AuthGuard)
+  // @UseGuards(AuthGuard)
   getPrice(@Query('currency') currency : string , @Query('timeFrame') timeFrame : any): {} {
     return this.appService.getPrice(currency , timeFrame);
   }
