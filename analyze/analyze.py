@@ -300,9 +300,9 @@ while True:
         print('start the runner')
         print('==========================================================')
         instance.start()
-        time.sleep(60*10)
+        time.sleep(60*45)
     else:
         print('==========================================================')
         print('script is sleep yet' , type(myobj.minute))
         print('==========================================================')
-        time.sleep(60*10)
+        time.sleep(60)
