@@ -280,6 +280,7 @@ class analyzor :
                 return False
             print('==========================================================')
             print(f'position successfully opened in {type}ing btc ' , mainResponse)
+            # mainResponse['order']['']
             print('==========================================================')
             requests.get('http://localhost:4000/transactions/update')
             return True
@@ -288,7 +289,13 @@ class analyzor :
             print('some error occured in creting position' , e)
             print('==========================================================')
             return False
+        
+    def updateState(self):
+        allPrices = self.gettingPrices()
+        self.rsi = self.calculateRSI(allPrices.json()['data'])
+        requests.post(f'http://localhost:4000/market?state={self.state}&rsi={self.rsi}&lastPrice={self.lastPrice}&lastSellPrice={self.lastSellPrice}&lastBuyPrice={self.lastBuyPrice}&lastState={self.lastState}')
 
+        
 
 instance = analyzor()
 
@@ -301,6 +308,12 @@ while True:
         print('==========================================================')
         instance.start()
         time.sleep(60*45)
+    elif (int(minute) == 59 or int(minute) == 45 or int(minute) == 15):
+       
+       print('==========================================================')
+       print('script is sleep yet' , myobj.minute)
+       print('==========================================================')
+       instance.updateState()
     else:
         print('==========================================================')
         print('script is sleep yet' , myobj.minute)
