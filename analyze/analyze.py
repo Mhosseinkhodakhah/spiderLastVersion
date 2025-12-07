@@ -185,7 +185,7 @@ class analyzor :
     def openPosition(self , type , amount) -> bool:
         print('start the creating the position' , self.log())
         try:
-            body = {"type":"buy","srcCurrency":"btc", "dstCurrency":"usdt", "execution" : "market" ,"amount" : str(30/self.lastPrice) ,"price":self.lastPrice}
+            body = {"type":"buy","srcCurrency":"btc", "dstCurrency":"usdt", "execution" : "market" ,"amount" : str(10/self.lastPrice) ,"price":self.lastPrice}
             if (type == 'sell'):
                 body['type'] = 'sell'
                 print('its sell position')
