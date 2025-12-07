@@ -308,12 +308,6 @@ while True:
         print('==========================================================')
         instance.start()
         time.sleep(60*45)
-    elif (int(minute) == 59 or int(minute) == 45 or int(minute) == 15):
-       
-       print('==========================================================')
-       print('script is sleep yet' , myobj.minute)
-       print('==========================================================')
-       instance.updateState()
     else:
         print('==========================================================')
         print('script is sleep yet' , myobj.minute)
