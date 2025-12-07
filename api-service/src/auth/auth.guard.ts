@@ -19,7 +19,7 @@ export class AuthGuard implements CanActivate {
       try {
         let token = apiKey.authorization.split(' ')[1]
         console.log('its token' , token)
-        let decode = this.jwt.verify(token.trim())
+        let decode =  this.jwt.verify(token.trim())
         request.user = decode
         return true;
       } catch (error) {
