@@ -324,6 +324,7 @@ while True:
         print('run the update state' , myobj.minute)
         print('==========================================================')
         instance.updateState()
+        time.sleep(60)
     else:
         print('==========================================================')
         print('script is sleep yet' , myobj.minute)
