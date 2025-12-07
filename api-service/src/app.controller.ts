@@ -44,13 +44,11 @@ export class AppController {
   }
 
   @Post('login')
-  @UseGuards(JwtAuthGuard)
   async login(@Body() body : loginDto){
     return this.appService.login(body)
   }
 
   @Post('register')
-  @UseGuards(JwtAuthGuard)
   async registre(@Body(new ValidationPipe()) body : registerDto){
     return this.appService.register(body)
   }
