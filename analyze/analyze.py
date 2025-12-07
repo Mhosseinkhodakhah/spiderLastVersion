@@ -3,6 +3,7 @@ import pandas as pd
 import talib
 import numpy as np
 import time
+from datetime import datetime
 
 class analyzor :
     def __init__(self):
@@ -12,6 +13,7 @@ class analyzor :
         self.lastSellPrice = 0
         self.lastBuyPrice = 0
         self.lastState = 0
+        self.token= 'Token e683b1a322bae2ea76783b1551509dc70114b471' 
         pass
 
 
@@ -50,17 +52,25 @@ class analyzor :
         return f'{self.state},{self.rsi},{self.lastPrice},{self.lastSellPrice},{self.lastBuyPrice},{self.lastState}'
 
 
+
+    '''
+    this is for checking and calculating of rsi and market situation and call the openPosition and realy controle the market and funds
+    '''
     def checkTheStatusOfPosition(self):
         if (self.rsi < 30):
             print('come into the buy zone now' , self.log())
             if (self.state == 0):
                 print('first step for buy befor' , self.log())
-                self.state += 1
-                self.lastBuyPrice = self.lastPrice
-                self.lastState = 1
-                requests.post(f'http://localhost:4000/market?state={self.state}&rsi={self.rsi}&lastPrice={self.lastPrice}&lastSellPrice={self.lastSellPrice}&lastBuyPrice={self.lastBuyPrice}&lastState={self.lastState}')
-                print('first step for buy after' , self.log())
-                pass
+                responseofTheOpeneingPosition1 = self.openPosition('buy' , 0)
+                if (responseofTheOpeneingPosition1 == True):
+                    self.state += 1
+                    self.lastBuyPrice = self.lastPrice
+                    self.lastState = 1
+                    requests.post(f'http://localhost:4000/market?state={self.state}&rsi={self.rsi}&lastPrice={self.lastPrice}&lastSellPrice={self.lastSellPrice}&lastBuyPrice={self.lastBuyPrice}&lastState={self.lastState}')
+                    print('first step for buy after' , self.log())
+                    pass
+                else :
+                    print('can not open the new position in this situation1' , self.log())
             elif (self.state == 7):
                 print('second step for buy befor' , self.log())
                 requests.post(f'http://localhost:4000/market?state={self.state}&rsi={self.rsi}&lastPrice={self.lastPrice}&lastSellPrice={self.lastSellPrice}&lastBuyPrice={self.lastBuyPrice}&lastState={self.lastState}')
@@ -71,22 +81,32 @@ class analyzor :
                     print('third step for buy befor' , self.log())
                     if ((((self.lastBuyPrice - self.lastPrice)/self.lastBuyPrice)*100) >= 5):       # here we should buy on step
                         print('third step for buy befor in the 5 percent' , self.log())
-                        self.state += 1
-                        self.lastBuyPrice = self.lastPrice
-                        self.lastState = 1
-                        requests.post(f'http://localhost:4000/market?state={self.state}&rsi={self.rsi}&lastPrice={self.lastPrice}&lastSellPrice={self.lastSellPrice}&lastBuyPrice={self.lastBuyPrice}&lastState={self.lastState}')
-                        print('third step for buy after in the 5 percent' , self.log())
+                        responseofTheOpeneingPosition2 = self.openPosition('buy' , 0)
+                        if (responseofTheOpeneingPosition2 == True):
+                            self.state += 1
+                            self.lastBuyPrice = self.lastPrice
+                            self.lastState = 1
+                            requests.post(f'http://localhost:4000/market?state={self.state}&rsi={self.rsi}&lastPrice={self.lastPrice}&lastSellPrice={self.lastSellPrice}&lastBuyPrice={self.lastBuyPrice}&lastState={self.lastState}')
+                            print('third step for buy after in the 5 percent' , self.log())
+                        else : 
+                            print('can not open the new position in this situation2' , self.log())
+                            pass
                     else:
                         print('third step for buy buy with no 5 percent happend' , self.log())
                         pass
                 elif (self.lastState == 0):
                     print('forth step for buy when last state was sell state befor' , self.log())
-                    self.state += 1
-                    self.lastBuyPrice = self.lastPrice
-                    self.lastState = 1
-                    requests.post(f'http://localhost:4000/market?state={self.state}&rsi={self.rsi}&lastPrice={self.lastPrice}&lastSellPrice={self.lastSellPrice}&lastBuyPrice={self.lastBuyPrice}&lastState={self.lastState}')
-                    print('forth step for buy when last state was sell state after' , self.log())
-                    pass
+                    responseofTheOpeneingPosition3 = self.openPosition('buy' , 0)
+                    if (responseofTheOpeneingPosition3 == True):
+                        self.state += 1
+                        self.lastBuyPrice = self.lastPrice
+                        self.lastState = 1
+                        requests.post(f'http://localhost:4000/market?state={self.state}&rsi={self.rsi}&lastPrice={self.lastPrice}&lastSellPrice={self.lastSellPrice}&lastBuyPrice={self.lastBuyPrice}&lastState={self.lastState}')
+                        print('forth step for buy when last state was sell state after' , self.log())
+                        pass
+                    else:
+                        print('can not open the new position in this situation3' , self.log())
+                        pass
                 else:
                     print('i cant found what should i do' , self.state , self.lastSellPrice , self.lastState , self.lastBuyPrice , self.lastPrice)
                     pass
@@ -105,34 +125,49 @@ class analyzor :
                     print('third step for sell befor' , self.log())
                     if ((((self.lastPrice - self.lastSellPrice)/self.lastPrice)*100) >= 5):       # here we should sell on step
                         print('third step for sell befor in the 5 percent' , self.log())
-                        self.state -= 1
-                        self.lastSellPrice = self.lastPrice
-                        self.lastState = 0
-                        requests.post(f'http://localhost:4000/market?state={self.state}&rsi={self.rsi}&lastPrice={self.lastPrice}&lastSellPrice={self.lastSellPrice}&lastBuyPrice={self.lastBuyPrice}&lastState={self.lastState}')
-                        print('third step for sell after in the 5 percent' , self.log())
-                        pass
+                        responseofTheOpeneingPosition4 = self.openPosition('sell' , 0)
+                        if (responseofTheOpeneingPosition4 == True):
+                            self.state -= 1
+                            self.lastSellPrice = self.lastPrice
+                            self.lastState = 0
+                            requests.post(f'http://localhost:4000/market?state={self.state}&rsi={self.rsi}&lastPrice={self.lastPrice}&lastSellPrice={self.lastSellPrice}&lastBuyPrice={self.lastBuyPrice}&lastState={self.lastState}')
+                            print('third step for sell after in the 5 percent' , self.log())
+                            pass
+                        else:
+                            print('can not open the new position in this situation4' , self.log())
+                            pass
                     else:
                         print('third step for sell sell with no 5 percent happend' , self.log())
                         pass
                 elif (self.lastState == 1):
                     print('forth step for buy when last state was sell state befor' , self.log())
-                    self.state -= 1
-                    self.lastSellPrice = self.lastPrice
-                    self.lastState = 0
-                    requests.post(f'http://localhost:4000/market?state={self.state}&rsi={self.rsi}&lastPrice={self.lastPrice}&lastSellPrice={self.lastSellPrice}&lastBuyPrice={self.lastBuyPrice}&lastState={self.lastState}')
-                    print('forth step for buy when last state was sell state after' , self.log())
-                    pass
+                    responseofTheOpeneingPosition5 = self.openPosition('sell' , 0)
+                    if (responseofTheOpeneingPosition5 == True):
+                        self.state -= 1
+                        self.lastSellPrice = self.lastPrice
+                        self.lastState = 0
+                        requests.post(f'http://localhost:4000/market?state={self.state}&rsi={self.rsi}&lastPrice={self.lastPrice}&lastSellPrice={self.lastSellPrice}&lastBuyPrice={self.lastBuyPrice}&lastState={self.lastState}')
+                        print('forth step for buy when last state was sell state after' , self.log())
+                        pass
+                    else:
+                        print('can not open the new position in this situation5' , self.log())
+                        pass
                 else:
                     print('i cant found what should i do---1' , self.state , self.lastSellPrice , self.lastState , self.lastBuyPrice , self.lastPrice)
                     pass
             elif (self.state == 7):
                 print('first step for sell befor' , self.log())
-                self.state -= 1
-                self.lastSellPrice = self.lastPrice
-                self.lastState = 0
-                requests.post(f'http://localhost:4000/market?state={self.state}&rsi={self.rsi}&lastPrice={self.lastPrice}&lastSellPrice={self.lastSellPrice}&lastBuyPrice={self.lastBuyPrice}&lastState={self.lastState}')
-                print('first step for sell after' , self.log())
-                pass
+                responseofTheOpeneingPosition6 = self.openPosition('sell' , 0)
+                if (responseofTheOpeneingPosition6 == True):
+                    self.state -= 1
+                    self.lastSellPrice = self.lastPrice
+                    self.lastState = 0
+                    requests.post(f'http://localhost:4000/market?state={self.state}&rsi={self.rsi}&lastPrice={self.lastPrice}&lastSellPrice={self.lastSellPrice}&lastBuyPrice={self.lastBuyPrice}&lastState={self.lastState}')
+                    print('first step for sell after' , self.log())
+                    pass
+                else:
+                    print('can not open the new position in this situation6' , self.log())
+                    pass
             else : 
                 print('i cant found what should i do---0' , self.state , self.lastSellPrice , self.lastState , self.lastBuyPrice , self.lastPrice)
                 pass
@@ -144,14 +179,46 @@ class analyzor :
     
 
 
+    '''
+    this is for creating a position and handeled by checkTheStatusOfPosition function
+    '''
+    def openPosition(self , type , amount) -> bool:
+        print('start the creating the position' , self.log())
+        try:
+            body = {"type":"buy","srcCurrency":"btc", "dstCurrency":"usdt", "execution" : "market" ,"amount" : str(30/self.lastPrice) ,"price":self.lastPrice}
+            if (type == 'sell'):
+                body['type'] = 'sell'
+                print('its sell position')
+            elif(type == 'buy'):
+                body['type'] = 'buy'
+                print('its buy position')
+            else:
+                print('invalid type')
+                return False
+            
+            response = requests.post('https://apiv2.nobitex.ir/market/orders/add' , data=body , headers={'Authorization' : self.token})
+            mainResponse = response.json()
+            if ('status' not in mainResponse or mainResponse['status'] != 'ok'):
+                print('error in opening position' , mainResponse)
+                return False
 
-    def openPosition(self , type , amount):
-        pass
+            print(f'position successfully opened in {type}ing btc ' , mainResponse)
+            requests.get('http://localhost:4000/transactions/update')
+            return True
+        except Exception as e:
+            print('some error occured in creting position' , e)
+            return False
 
 
 instance = analyzor()
 
-
 while True:
-    instance.start()
-    time.sleep(60*10)
+    myobj = datetime.now()
+    minute = myobj.minute
+    if (minute == 59):
+        print('start the runner')
+        instance.start()
+        time.sleep(60*10)
+    else:
+        print('script is sleep yet' , myobj.minute)
+        time.sleep(60*10)
