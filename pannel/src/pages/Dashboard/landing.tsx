@@ -178,7 +178,7 @@ export default function LandingPage() {
                 </div>
 
                 {/* Stats Grid */}
-                <div className="grid grid-cols-2 gap-4">
+                {/* <div className="grid grid-cols-2 gap-4">
                   <div className="bg-gray-800/50 rounded-xl p-4">
                     <div className="text-gray-400 text-sm mb-1">Total Balance</div>
                     <div className="text-2xl font-bold text-white">${marketStats?.totalBalance.toLocaleString()}</div>
@@ -187,7 +187,7 @@ export default function LandingPage() {
                     <div className="text-gray-400 text-sm mb-1">Active Pairs</div>
                     <div className="text-2xl font-bold text-blue-400">{marketStats?.activeCurrencies}</div>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
             
