@@ -270,7 +270,7 @@ export default function LandingPage() {
                 </button>
                 <button 
                 onClick={()=>{
-                    navigate("/home")
+                    navigate("/signin")
                 }
                 }
                 className="px-8 py-4 border border-gray-700 rounded-full font-semibold text-lg hover:bg-white/5 transition-all">
