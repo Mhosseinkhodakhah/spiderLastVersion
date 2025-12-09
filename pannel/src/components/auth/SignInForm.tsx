@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import { EyeCloseIcon, EyeIcon } from "../../icons";
 import Label from "../form/Label";
@@ -11,6 +11,7 @@ import { useMutation } from "@tanstack/react-query";
 import { loginRequest } from "../../server/auth";
 import { setCookie } from "../../utils/cookie";
 import toast from "react-hot-toast";
+import LandingPage from "../../pages/Dashboard/landing";
 
 export default function SignInForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -26,7 +27,7 @@ export default function SignInForm() {
         console.log('token isss>>', data.data.token)
         setCookie("admin-token", data.data.token, 7);
         setCookie("admin-access-token", data.data.access, 7);
-        navigate("/home", { replace: true });
+        navigate("/dashboard", { replace: true });
       } else {
         toast.error(data?.error);
       }

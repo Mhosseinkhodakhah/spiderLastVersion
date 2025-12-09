@@ -5,12 +5,13 @@ import SignInForm from "../../components/auth/SignInForm";
 export default function SignIn() {
   return (
     <>
+      {/* <LandingPage /> */}
       <PageMeta
         title="spider crypto bot | ورود"
         description="صفحه ورود به پنل ادمین"
       />
       <AuthLayout>
-        <SignInForm />
+        <SignInForm  />
       </AuthLayout>
     </>
   );

@@ -28,21 +28,21 @@ export default function LandingPage() {
     });
     const navigate = useNavigate();
 
-  // API Queries
-  const { data: balanceData, isLoading: balanceLoading } = useQuery({
-    queryKey: ["getBalance"],
-    queryFn: getbalances,
-  });
+  // // API Queries
+  // const { data: balanceData, isLoading: balanceLoading } = useQuery({
+  //   queryKey: ["getBalance"],
+  //   queryFn: getbalances,
+  // });
 
   const { data: priceData } = useQuery({
     queryKey: ["getPrice"],
     queryFn: price,
   });
 
-  const { data: historyData } = useQuery({
-    queryKey: ["getHistory"],
-    queryFn: history,
-  });
+  // const { data: historyData } = useQuery({
+  //   queryKey: ["getHistory"],
+  //   queryFn: history,
+  // });
 
   const { data: marketState } = useQuery({
     queryKey: ["getMarket"],
@@ -128,14 +128,14 @@ export default function LandingPage() {
             <div className="flex flex-col sm:flex-row gap-4">
               <button 
               onClick={()=>{
-                    navigate("/signin")
+                    navigate("/signin" , {replace : true})
                 }}
               className="px-8 py-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full font-semibold hover:opacity-90 transition-all transform hover:scale-105">
                 Start Trading Now
               </button>
               <button 
               onClick={()=>{
-                    navigate("/signin")
+                    navigate("/signup" , {replace : true})
                 }}
               className="px-8 py-3 border border-gray-700 rounded-full font-semibold hover:bg-white/5 transition-all">
                 View Demo
@@ -274,7 +274,7 @@ export default function LandingPage() {
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <button 
                 onClick={()=>{
-                    navigate("/signin")
+                    navigate("/signup" , {replace : true})
                 }}
                 className="px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full font-semibold text-lg hover:opacity-90 transition-all transform hover:scale-105">
                   Create Free Account
@@ -282,7 +282,7 @@ export default function LandingPage() {
                 </button>
                 <button 
                 onClick={()=>{
-                    navigate("/signin")
+                    navigate("/signup" , {replace : true})
                 }
                 }
                 className="px-8 py-4 border border-gray-700 rounded-full font-semibold text-lg hover:bg-white/5 transition-all">

@@ -17,7 +17,7 @@ const LayoutContent: React.FC = () => {
     const cookie = getCookie("admin-token");
     
     if (cookie) {
-      navigate("/", { replace: true });
+      navigate("/dashboard", { replace: true });
     } else {
       navigate("/signin", { replace: true });
     }

@@ -18,7 +18,7 @@ export default function AuthLayout({
     const cookie = getCookie("admin-token");
 
     if (cookie) {
-      navigate("/", { replace: true });
+      navigate("/dashboard", { replace: true });
     } else {
       setIsDisplay(true);
     }
@@ -34,7 +34,7 @@ export default function AuthLayout({
       <nav className="border-b border-gray-800 backdrop-blur bg-gray-900/50">
         <div className="max-w-7xl mx-auto flex justify-between items-center p-4">
           <div className="flex items-center space-x-2">
-            <SiCoinbase className="text-blue-400" size={24} />
+            {/* <SiCoinbase className="text-blue-400" size={24} /> */}
             <span className="font-bold text-xl text-blue-400">spider crypto bot</span>
           </div>
           <div className="flex items-center space-x-4">

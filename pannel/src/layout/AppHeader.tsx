@@ -114,7 +114,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({ darkMode, setDarkMode }) => {
 
             {/* Logout Button */}
             <Link
-              to="/signin"
+              to="/"
               className="flex items-center gap-2 px-4 py-2 font-medium text-gray-300 rounded-lg hover:bg-gray-800 hover:text-red-400 transition-colors"
               onClick={() => { 
                 removeCookie("admin-access-token");
