@@ -10,7 +10,7 @@ export class AppController {
 
 
   @Get('balances')
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   getBalances(@Req() req : any) {
     const user = req.user;
     console.log('its user' , user)
@@ -19,28 +19,28 @@ export class AppController {
 
 
   @Get('price')
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   getPrice(@Query('currency') currency : string , @Query('timeFrame') timeFrame : any): {} {
     return this.appService.getPrice(currency , timeFrame);
   }
 
 
   @Get('transactionlist')
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   getTransActions(): {} {
     return this.appService.getTransActions();
   }
 
 
   @Get('/market')
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   getState(): {} {
     return this.appService.getState();
   }
 
 
   @Post('/market')
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   setState(@Query('state') state : number , @Query('rsi') rsi : string , @Query('lastPrice') lastPrice : string , @Query('lastSellPrice') lastSellPrice : string , @Query('lastBuyPrice') lastBuyPrice : string , @Query('lastState') lastState : number): {} {
     return this.appService.setState(state , rsi , lastPrice , lastState ,lastSellPrice , lastBuyPrice);
   }
@@ -56,13 +56,13 @@ export class AppController {
   }
 
   @Post('state')
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   async setStateOfMarket(@Body() body : loginDto){
     return this.appService.login(body)
   }
 
   @Get('/transactions/update')
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   updateTransActions(): {} {
     return this.appService.updateTransActions();
   }
