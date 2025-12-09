@@ -126,10 +126,18 @@ export default function LandingPage() {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4">
-              <button className="px-8 py-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full font-semibold hover:opacity-90 transition-all transform hover:scale-105">
+              <button 
+              onClick={()=>{
+                    navigate("/signin")
+                }}
+              className="px-8 py-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full font-semibold hover:opacity-90 transition-all transform hover:scale-105">
                 Start Trading Now
               </button>
-              <button className="px-8 py-3 border border-gray-700 rounded-full font-semibold hover:bg-white/5 transition-all">
+              <button 
+              onClick={()=>{
+                    navigate("/signin")
+                }}
+              className="px-8 py-3 border border-gray-700 rounded-full font-semibold hover:bg-white/5 transition-all">
                 View Demo
               </button>
             </div>
@@ -264,7 +272,11 @@ export default function LandingPage() {
                 Join thousands of traders who trust our platform for their automated trading needs.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <button className="px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full font-semibold text-lg hover:opacity-90 transition-all transform hover:scale-105">
+                <button 
+                onClick={()=>{
+                    navigate("/signin")
+                }}
+                className="px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full font-semibold text-lg hover:opacity-90 transition-all transform hover:scale-105">
                   Create Free Account
                   <ArrowRight className="w-5 h-5 ml-2 inline" />
                 </button>
