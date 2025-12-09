@@ -26,7 +26,7 @@ export default function SignInForm() {
         console.log('token isss>>', data.data.token)
         setCookie("admin-token", data.data.token, 7);
         setCookie("admin-access-token", data.data.access, 7);
-        navigate("/", { replace: true });
+        navigate("/home", { replace: true });
       } else {
         toast.error(data?.error);
       }

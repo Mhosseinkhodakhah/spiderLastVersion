@@ -6,6 +6,7 @@ import NotFound from "./pages/OtherPage/NotFound";
 import AppLayout from "./layout/AppLayout";
 import { ScrollToTop } from "./components/common/ScrollToTop";
 import Home from "./pages/Dashboard/Home";
+import LandingPage from "./pages/Dashboard/landing";
 
 
 export default function App() {  
@@ -17,9 +18,9 @@ export default function App() {
         <Routes>
           {/* Dashboard Layout */}
           {/* <Route index path="/" element={<Splash />} /> */}
+          <Route index path="/" element={<LandingPage />} />
           <Route element={<AppLayout />}>
-            <Route index path="/" element={<Home />}/>
-            <Route index path="/" element={<Home />}/>
+            <Route index path="/home" element={<Home />}/>
           </Route>
           {/* Auth Layout */}
           <Route path="/signin" element={<SignIn />} />

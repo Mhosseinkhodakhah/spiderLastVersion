@@ -61,7 +61,7 @@ export default function Home() {
     marketStateFinal = {lastBuyPrice : +marketStateData[0].lastBuyPrice ,lastSellPrice : +marketStateData[0].lastSellPrice , lastState : marketStateData[0].lastState , state: marketStateData[0].state, marketStatus: (((+marketStateData[0].totalBalance) - (+marketStateData[marketStateData.length - 1].totalBalance)) / (+marketStateData[marketStateData.length - 1].totalBalance)) * 100 > 0 ? 'bullish' : 'bearish', totalBalance: +marketStateData[0].totalBalance, activeCurrencies: marketStateData[0].currencies, priceChange: (((+marketStateData[0].totalBalance) - (+marketStateData[marketStateData.length - 1].totalBalance)) / (+marketStateData[marketStateData.length - 1].totalBalance)) * 100, rsi: marketStateData[0].rsi }
     console.log('its done', marketStateData)
   }
-
+  
   if (historyData.isSuccess) {
     Histories = historyData.data.data
   }
