@@ -159,7 +159,7 @@ export default function LandingPage() {
                       <span className="text-gray-300">Live Portfolio</span>
                     </div>
                     <div className={`px-3 py-1 rounded-full ${marketStats?.isBullish ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'}`}>
-                      {marketStats?.isBullish ?  priceData?.data[priceData?.data?.length - 1] - priceData?.data[0] > 0 ? ((priceData?.data[priceData?.data?.length - 1] - priceData?.data[0]) / priceData?.data[priceData?.data?.length - 1] )* 100 : ((priceData?.data[priceData?.data?.length - 1] - priceData?.data[0]) / priceData?.data[0] )* 100 : priceData?.data[priceData?.data?.length - 1] - priceData?.data[0] > 0 ? ((priceData?.data[priceData?.data?.length - 1] - priceData?.data[0]) / priceData?.data[priceData?.data?.length - 1] )* 100 : ((priceData?.data[priceData?.data?.length - 1] - priceData?.data[0]) / priceData?.data[0] )* 100  } Today
+                      {marketStats?.isBullish ?  priceData?.data[priceData?.data?.length - 1] - priceData?.data[0] > 0 ? (((priceData?.data[priceData?.data?.length - 1] - priceData?.data[0]) / priceData?.data[priceData?.data?.length - 1] )* 100).toFixed(3) : (((priceData?.data[priceData?.data?.length - 1] - priceData?.data[0]) / priceData?.data[0] )* 100).toFixed(3) : priceData?.data[priceData?.data?.length - 1] - priceData?.data[0] > 0 ? (((priceData?.data[priceData?.data?.length - 1] - priceData?.data[0]) / priceData?.data[priceData?.data?.length - 1] )* 100 ).toFixed(3): (((priceData?.data[priceData?.data?.length - 1] - priceData?.data[0]) / priceData?.data[0] )* 100).toFixed(3)  } Today
                     </div>
                   </div>
                   
