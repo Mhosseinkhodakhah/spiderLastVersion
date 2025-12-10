@@ -32,7 +32,7 @@ export default function Home() {
   });
 
   const [btcPrice, setBtcPrice] = useState<string>(''); 
-
+  
   let queryPrice: any;
 
   let Histories: any;
@@ -249,15 +249,22 @@ export default function Home() {
             </div>
             <Divider className="lg:hidden md:hidden py-2"></Divider>
 
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 text-center">
+            <div className="grid grid-cols-1 md:grid-cols-5 gap-6 text-center">
               {/* Total Balance */}
+              <Divider className="lg:hidden md:hidden py-2 mt-2"></Divider>
+              <div className="flex flex-col items-center">
+                <span className=" text-sm mb-1 animate-pulse bg-green-400 text-black w-full rounded-md border border-gray"> قیمت بازار</span>
+                <span className="text-2xl font-bold text-white">
+                  {queryPrice[queryPrice.length-1] || 0}
+                </span>
+              </div>
+              <Divider className="lg:hidden md:hidden py-2 mt-2"></Divider>
               <div className="flex flex-col items-center">
                 <span className=" text-sm mb-1 animate-pulse bg-green-400 text-black w-full rounded-md border border-gray">آخرین قیمت خرید</span>
                 <span className="text-2xl font-bold text-white">
                   {marketStateFinal.lastBuyPrice == 0 ? '0' : `$ ${marketStateFinal.lastBuyPrice.toFixed(2)}` }
                 </span>
               </div>
-              <Divider className="lg:hidden md:hidden py-2 mt-2"></Divider>
                <div className="flex flex-col items-center">
                 <span className=" text-sm mb-1 animate-pulse bg-red-400 rounded-md border border-gray text-black w-full">آخرین قیمت فروش</span>
                 <span className="text-2xl font-bold text-white">
@@ -267,7 +274,7 @@ export default function Home() {
               <Divider className="lg:hidden md:hidden py-2 mt-2"></Divider>
 
               <div className="flex flex-col  items-center">
-                <span className="text-gray-400 text-sm mb-1">RSI</span>
+                <span className="text-sm mb-1 animate-pulse bg-green-400 text-black w-full rounded-md border border-gray">RSI</span>
                 <span className={`text-3xl w-full font-bold text-white ${+marketStateFinal.rsi > 70 ? 'animate-pulse bg-red-400 rounded-md border border-gray' : +marketStateFinal.rsi < 30 ? 'animate-pulse bg-green-400 rounded-md border border-gray' : ''}  `}>
                   {(+marketStateFinal.rsi).toFixed(2)}
                 </span>
@@ -285,7 +292,7 @@ export default function Home() {
               {/* <Divider className="lg:hidden md:hidden"></Divider> */}
               {/* Price Change */}
               <div className="flex flex-col items-center">
-                <span className="text-gray-400 text-sm mb-1">درصد تغییرات</span>
+                <span className="text-sm mb-1 animate-pulse bg-green-400 text-black w-full rounded-md border border-gray">درصد تغییرات</span>
                 <span className={`text-4xl font-bold  ${marketStateFinal.priceChange > 0
                     ? 'text-green-400'
                     : marketStateFinal.priceChange < 0
@@ -346,9 +353,9 @@ export default function Home() {
           No balances found
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
           {data.map((item: any, index: number) => (
-            <div key={index} className="bg-gray-900/50 rounded-xl p-6 border border-gray-800">
+            <div key={index} className="bg-gray-90 rounded-xl p-6 border border-gray-800">
               {/* Display the raw item first to see what you're getting */}
               {/* <h1 className="text-sm text-gray-400 mb-4"> */}
               {/* {JSON.stringify(item, null, 2)} */}
@@ -359,11 +366,11 @@ export default function Home() {
                 <div className="space-y-2">
                   {Object.entries(item).map(([key, value]) => (
                     <div key={key} className="flex justify-between">
-                      <span className="text-gray-400 capitalize">{key}:</span>
-                      {key == 'BTC' && (
-                        <span className={`font-bold text-xl ${(+queryPrice[queryPrice.length - 1] > +queryPrice[queryPrice.length - 2]) ? 'text-green-400 rounded-xl border border-green-400 p-2 shadow-3xl' : 'text-red-400 rounded-xl border border-red-400 p-2 shadow-3xl'}`}>{
+                      <span className="text-white capitalize">{key}:</span>
+                      {/* {key == 'BTC' && (
+                        <span className={`font-bold text-sm ${(+queryPrice[queryPrice.length - 1] > +queryPrice[queryPrice.length - 2]) ? 'text-green-400 rounded-xl border border-green-400 p-2 shadow-3xl' : 'text-red-400 rounded-xl border border-red-400 p-2 shadow-3xl'}`}>{
                           String(queryPrice[queryPrice.length - 1])} $</span>
-                      )}
+                      )} */}
                       <span className={`font-bold text-xl ${(+value?.balance > 0 && key != 'RLS') ? 'text-green-400 rounded-xl border border-green-400 p-2 shadow-3xl' : 'text-red-400 rounded-xl border border-red-400 p-2 shadow-3xl'}`}>{
                         String(value?.balance)}</span>
                     </div>
