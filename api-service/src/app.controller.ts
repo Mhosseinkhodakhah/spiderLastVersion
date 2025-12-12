@@ -3,6 +3,7 @@ import { AppService } from './app.service';
 import { loginDto, registerDto } from './dto/login.dto';
 import { timeFrameType } from './dto/types';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
+import { addSetting } from './dto/addSetting.dto';
 
 @Controller()
 export class AppController {
@@ -66,5 +67,16 @@ export class AppController {
   updateTransActions(): {} {
     return this.appService.updateTransActions();
   }
+
+  @Get('/setting')
+  async getSetting() : Promise<{}>{
+    return this.appService.getSetting()
+  }
+
+  @Post('/setting/add')
+  async addNewSetting(@Body(new ValidationPipe()) body : addSetting) : Promise<{}>{
+    return this.appService.addNewSetting(body)
+  }
+
 
 }

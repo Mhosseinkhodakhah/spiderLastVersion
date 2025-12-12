@@ -7,6 +7,8 @@ export class ApiCallService {
      * for statics data
      */
     private readonly url: { currencies, balance , price , transAcions } = {transAcions :'https://apiv2.nobitex.ir/users/transactions-history' , price : 'https://apiv2.nobitex.ir/market/udf/history' , currencies: 'https://apiv2.nobitex.ir/v2/wallets?currencies', balance: 'https://apiv2.nobitex.ir/users/wallets/balance' }
+    // private readonly coinMarketCapPriceToken = '266447fc-c176-4cc3-b317-c580778c801a'
+    // private readonly coinMarketCapPrice = { fearOrNot: 'https://pro-api.coinmarketcap.com/v3/fear-and-greed/latest', price: 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/historical' }
     private readonly token: string = 'Token e683b1a322bae2ea76783b1551509dc70114b471' 
 
 
@@ -81,6 +83,9 @@ export class ApiCallService {
      */
     async getPrice(currenci ?: string , timeFrame ?: timeFrameType) : Promise<string[]>{
         
+
+
+
         let currency = currenci ? currenci : 'BTCUSDT'
         
         let currentTime = (new Date().getTime()/1000).toFixed()

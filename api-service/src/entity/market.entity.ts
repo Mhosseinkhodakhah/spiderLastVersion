@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 
 
@@ -32,7 +32,6 @@ export class market {
     @Column({type : 'varchar' , default : '0'})
     lastSellPrice : string
 
-
     @Column({type : 'varchar' , default : '0'})
     lastBuyPrice : string
 
@@ -41,4 +40,7 @@ export class market {
     
     @UpdateDateColumn()
     updatedAt: Date;
+
+    @DeleteDateColumn()
+    deletedAt:Date
 }

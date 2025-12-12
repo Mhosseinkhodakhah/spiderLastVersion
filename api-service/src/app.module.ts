@@ -12,6 +12,7 @@ import { market } from './entity/market.entity';
 import { transActions } from './entity/transActions.entity';
 import { user } from './entity/user.entity';
 import { JwtStrategy } from './auth/jwt.strategy';
+import { setting } from './entity/setting.entity';
 
 
 @Module({
@@ -27,14 +28,16 @@ import { JwtStrategy } from './auth/jwt.strategy';
       entities: [
         market,
         transActions,
-        user
+        user,
+        setting
       ],
       synchronize: true,
     }),
     TypeOrmModule.forFeature([
       market,
       transActions,
-      user
+      user,
+      setting
     ]),
     JwtModule.registerAsync({
       imports: [ConfigModule],  

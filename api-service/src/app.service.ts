@@ -9,6 +9,8 @@ import { Repository } from 'typeorm';
 import { transActions } from './entity/transActions.entity';
 import { user } from './entity/user.entity';
 import * as bcrypt from 'bcrypt';
+import { setting } from './entity/setting.entity';
+import { addSetting } from './dto/addSetting.dto';
 
 @Injectable()
 export class AppService {
@@ -20,6 +22,7 @@ export class AppService {
     @InjectRepository(market) private readonly marketRepo: Repository<market>,
 
     @InjectRepository(transActions) private readonly transActionsRepo : Repository<transActions>,
+    @InjectRepository(setting) private readonly settingRepo : Repository<setting>,
     @InjectRepository(user) private readonly userRepo : Repository<user>,
   ){}
 
@@ -262,7 +265,7 @@ export class AppService {
         totalBalance += +currencies[i][Object.keys(currencies[i])[0]].balance        
       }
     }
-    
+      
     marketSituation.totalBalance = totalBalance.toString()
     
     marketSituation.currencies = currenciesCount.toString()
@@ -298,6 +301,49 @@ export class AppService {
     }
 
   }
+
+  /**
+   * this is for getting setting
+   */
+  async getSetting(){
+    let setting = await this.settingRepo.findOne({
+      where: {
+        active: true
+      }
+    })
+    if (!setting) {
+      setting = await this.settingRepo.save(this.settingRepo.create({
+        volume: '10',
+        percent: 5,
+        active: true,
+        currencies: ['BTC']
+      }))
+    }
+
+    return {
+      success : true,
+      message : 'fetching data done',
+      data : setting
+    }
+
+  }
+
+  /**
+   * this is for adding new setting by user for his positions
+   * @param body 
+   */
+  async addNewSetting(body : addSetting){
+    let newSetting= await this.settingRepo.create(body)
+    await this.settingRepo.save(newSetting)
+
+    return {
+      success: true,
+      message: 'fetching data done',
+      data: newSetting
+    }
+    
+  }
+
 
 }
 
