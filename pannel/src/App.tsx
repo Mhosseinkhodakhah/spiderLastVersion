@@ -8,6 +8,7 @@ import { ScrollToTop } from "./components/common/ScrollToTop";
 import Home from "./pages/Dashboard/Home";
 import LandingPage from "./pages/Dashboard/landing";
 import Splash from "./pages/Dashboard/splash";
+import SettingsPage from "./components/education/EducationLists";
 
 
 export default function App() {  
@@ -21,6 +22,7 @@ export default function App() {
           {/* <Route path="/" element={<Splash />} /> */}
           <Route  element={<AppLayout />}>
             <Route  index path="/dashboard"  element={<Home />}/>                            
+            <Route  index path="/setting"  element={<SettingsPage />}/>                            
           </Route>
           <Route path="/" element={<LandingPage />} />
           {/* Auth Layout */}

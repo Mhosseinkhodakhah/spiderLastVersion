@@ -10,6 +10,7 @@ import {
   FaBars
 } from 'react-icons/fa';
 import { SiCoinbase } from 'react-icons/si';
+import { useNavigate } from 'react-router';
 
 const AppSidebar: React.FC = () => {
   const { isExpanded, isHovered, isMobileOpen, toggleMobileSidebar } = useSidebar();
@@ -23,7 +24,7 @@ const AppSidebar: React.FC = () => {
     { icon: <FaShieldAlt className="text-gray-400" size={20} />, text: 'Security' },
     { icon: <FaCog className="text-gray-400" size={20} />, text: 'Settings' },
   ];
-
+  const navigate = useNavigate();
   return (
     <div className="h-full flex flex-col">
       {/* Sidebar Header with Mobile Close Button */}
@@ -60,6 +61,9 @@ const AppSidebar: React.FC = () => {
                   }
                   ${showText ? 'justify-start' : 'justify-center'}
                 `}
+                onClick={()=>{
+                  navigate('/setting')
+                }}
               >
                 {item.icon}
                 {showText && (

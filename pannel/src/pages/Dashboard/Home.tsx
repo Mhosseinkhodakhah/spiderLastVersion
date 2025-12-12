@@ -12,19 +12,15 @@ export default function Home() {
     queryFn: getbalances,
   });
 
-
-
   const priceData = useQuery({
     queryKey: ["getPrice"],
     queryFn: price,
   });
 
-
   const historyData = useQuery({
     queryKey: ["getHistory"],
     queryFn: history,
   });
-
 
   const marketState = useQuery({
     queryKey: ["getMarket"],

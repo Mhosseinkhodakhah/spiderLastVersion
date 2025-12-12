@@ -56,6 +56,23 @@ export const deleteEvent = async (id: string) => {
   }
 };
 
+
+
+export const getSettings = async () => {
+  try {
+    const { data } = await instance.get(
+      `setting`
+    );
+
+    return data;
+  } catch (err : any) {
+    console.error("Error fetching events:", err);
+    return err.response.data;
+  }
+};
+
+
+
 export const homeEvent = async (id: string) => {
   try {
     const { data } = await instance.put(
