@@ -4,7 +4,7 @@ import talib
 import numpy as np
 import time
 from datetime import datetime
-import yfinance as yf
+
 
 class analyzor :
     def __init__(self):
@@ -19,11 +19,6 @@ class analyzor :
     
     
     def start(self):
-        ticker = yf.Ticker("BTC-USD")
-        period = '1d' 
-        interval = '1h'
-        data = ticker.history(interval=interval, period= period)
-        print('data ticker' , data)
         currentStateRespons = requests.get('http://localhost:4000/market')
         currentState = currentStateRespons.json()
         if (len(currentState['data']) == 0):
