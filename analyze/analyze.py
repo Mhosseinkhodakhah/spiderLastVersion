@@ -4,6 +4,7 @@ import talib
 import numpy as np
 import time
 from datetime import datetime
+import yfinance as yf
 
 class analyzor :
     def __init__(self):
@@ -15,9 +16,14 @@ class analyzor :
         self.lastState = 0
         self.token= 'Token e683b1a322bae2ea76783b1551509dc70114b471' 
         pass
-
-
+    
+    
     def start(self):
+        ticker = yf.Ticker("BTC-USD")
+        period = '1d' 
+        interval = '1h'
+        data = ticker.history(interval=interval, period= period)
+        print('data ticker' , data)
         currentStateRespons = requests.get('http://localhost:4000/market')
         currentState = currentStateRespons.json()
         if (len(currentState['data']) == 0):
@@ -43,7 +49,7 @@ class analyzor :
         self.lastPrice = data[len(data)-1]
         closes = np.array(data)
         rsi = talib.RSI(closes, timeperiod=14)
-        print(rsi[len(rsi)-1])
+        print(rsi[len(rsi)-1] , self.lastPrice)
         mainRsi = rsi[len(rsi)-1]
         return mainRsi
     
