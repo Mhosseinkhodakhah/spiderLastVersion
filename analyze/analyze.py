@@ -282,7 +282,8 @@ class analyzor :
             print(f'position successfully opened in {type}ing btc ' , mainResponse)
             # mainResponse['order']['']
             print('==========================================================')
-            requests.get('http://localhost:4000/transactions/update')
+            responseOfUpdateTransActions = requests.get('http://localhost:4000/transactions/update')
+            print('response of the update t reransactions' , responseOfUpdateTransActions)
             return True
         except Exception as e:
             print('==========================================================')
@@ -313,20 +314,20 @@ instance = analyzor()
 while True:
     myobj = datetime.now()
     minute = myobj.minute
-    if (int(minute) == 29):
-        print('==========================================================')
-        print('start the runner')
-        print('==========================================================')
-        instance.start()
-        time.sleep(60*45)
-    elif (int(minute) == 59 or int(minute) == 45 or int(minute) == 15):
-        print('==========================================================')
-        print('run the update state' , myobj.minute)
-        print('==========================================================')
-        instance.updateState()
-        time.sleep(60)
-    else:
-        print('==========================================================')
-        print('script is sleep yet' , myobj.minute)
-        print('==========================================================')
-        time.sleep(60)
+    # if (int(minute) == 29):
+    print('==========================================================')
+    print('start the runner' , myobj)
+    print('==========================================================')
+    instance.start()
+    time.sleep(60)
+    # elif (int(minute) == 59 or int(minute) == 45 or int(minute) == 15):
+    #     print('==========================================================')
+    #     print('run the update state' , myobj.minute)
+    #     print('==========================================================')
+    #     instance.updateState()
+    #     time.sleep(60)
+    # # else:
+    #     print('==========================================================')
+    #     print('script is sleep yet' , myobj.minute)
+    #     print('==========================================================')
+    #     time.sleep(60)
