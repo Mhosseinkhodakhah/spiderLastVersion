@@ -94,7 +94,7 @@ class analyzor :
                     print('==========================================================')
                     print('third step for buy befor' , self.log())
                     print('==========================================================')
-                    if ((((self.lastBuyPrice - self.lastPrice)/self.lastBuyPrice)*100) >= 5):       # here we should buy on step
+                    if ((((self.lastBuyPrice - self.lastPrice)/self.lastBuyPrice)*100) >= 4):       # here we should buy on step
                         print('==========================================================')
                         print('third step for buy befor in the 5 percent' , self.log())
                         print('==========================================================')
@@ -165,7 +165,7 @@ class analyzor :
                     print('==========================================================')
                     print('third step for sell befor' , self.log())
                     print('==========================================================')
-                    if ((((self.lastPrice - self.lastSellPrice)/self.lastPrice)*100) >= 5):       # here we should sell on step
+                    if ((((self.lastPrice - self.lastSellPrice)/self.lastPrice)*100) >= 4):       # here we should sell on step
                         print('==========================================================')
                         print('third step for sell befor in the 5 percent' , self.log())
                         print('==========================================================')
