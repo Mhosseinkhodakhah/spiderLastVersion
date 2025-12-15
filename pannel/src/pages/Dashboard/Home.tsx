@@ -3,6 +3,7 @@ import { useNavigate } from "react-router";
 import { getbalances, history, market, price } from "../../server/admin";
 import { Divider } from "@heroui/divider";
 import { useState } from "react";
+import { number } from "yup";
 
 export default function Home() {
   // const navigate = useNavigate();
@@ -12,15 +13,18 @@ export default function Home() {
     queryFn: getbalances,
   });
 
+
+  // const [lastChange , setLastChange] = useState<number>(0)
+
   const priceData = useQuery({
     queryKey: ["getPrice"],
     queryFn: price,
   });
 
-  const historyData = useQuery({
-    queryKey: ["getHistory"],
-    queryFn: history,
-  });
+  // const historyData = useQuery({
+  //   queryKey: ["getHistory"],
+  //   queryFn: history,
+  // });
 
   const marketState = useQuery({
     queryKey: ["getMarket"],
@@ -35,32 +39,67 @@ export default function Home() {
 
   let marketStateData: any;
 
-  if (historyData.isError){
-    Histories = []
-  }
+  // if (historyData.isError){
+  //   Histories = []
+  // }
 
 
-  if (historyData.isFetching) {
-    return (
-      <div className="flex items-center justify-center h-64">
-        <div className="text-blue-400">Loading balances...</div>
-      </div>
-    );
-  }
+  // if (historyData.isFetching) {
+  //   return (
+  //     <div className="flex items-center justify-center h-64">
+  //       <div className="text-blue-400">Loading balances...</div>
+  //     </div>
+  //   );
+  // }
 
 
-  let marketStateFinal = {lastSellPrice : 0 , lastBuyPrice : 0 , lastState : 0 ,state: 0, marketStatus: 'bearish', totalBalance: 0, activeCurrencies: 0, priceChange: 0, rsi: 0 }
+  let marketStateFinal = {lastSellPrice : 0 , lastPrice : 0 ,lastBuyPrice : 0 , lastState : 0 ,state: 0, marketStatus: 'bearish', totalBalance: 0, activeCurrencies: 0, priceChange: 0, rsi: 0 }
+
+  let lastChange = 0
+  let marketType = 0
 
   if (marketState.isSuccess) {
     marketStateData = marketState.data.data
     console.log('its hereeasasaasas', marketStateData)
-    marketStateFinal = {lastBuyPrice : +marketStateData[0].lastBuyPrice ,lastSellPrice : +marketStateData[0].lastSellPrice , lastState : marketStateData[0].lastState , state: marketStateData[0].state, marketStatus: (((+marketStateData[0].totalBalance) - (+marketStateData[marketStateData.length - 1].totalBalance)) / (+marketStateData[marketStateData.length - 1].totalBalance)) * 100 > 0 ? 'bullish' : 'bearish', totalBalance: +marketStateData[0].totalBalance, activeCurrencies: marketStateData[0].currencies, priceChange: (((+marketStateData[0].totalBalance) - (+marketStateData[marketStateData.length - 1].totalBalance)) / (+marketStateData[marketStateData.length - 1].totalBalance)) * 100, rsi: marketStateData[0].rsi }
-    console.log('its done', marketStateData)
+    marketStateFinal = {lastPrice : +marketStateData[0].lastPrice , lastBuyPrice : +marketStateData[0].lastBuyPrice ,lastSellPrice : +marketStateData[0].lastSellPrice , lastState : marketStateData[0].lastState , state: marketStateData[0].state, marketStatus: (((+marketStateData[0].totalBalance) - (+marketStateData[marketStateData.length - 1].totalBalance)) / (+marketStateData[marketStateData.length - 1].totalBalance)) * 100 > 0 ? 'bullish' : 'bearish', totalBalance: +marketStateData[0].totalBalance, activeCurrencies: marketStateData[0].currencies, priceChange: (((+marketStateData[0].totalBalance) - (+marketStateData[marketStateData.length - 1].totalBalance)) / (+marketStateData[marketStateData.length - 1].totalBalance)) * 100, rsi: marketStateData[0].rsi }
+    if (+marketStateFinal.lastState == 0){
+      let percent = 0
+      
+      if (+marketStateFinal.lastPrice > +marketStateFinal.lastSellPrice){
+        marketType = 1
+        let mainPrice =marketStateFinal.lastSellPrice
+        percent = ((+marketStateFinal.lastPrice - +mainPrice)/+mainPrice)*100
+      }else{
+        marketType = 0
+        let mainPrice = marketStateFinal.lastPrice
+        percent = ((+marketStateFinal.lastSellPrice - +mainPrice) / +mainPrice) * 100
+      }
+      console.log('its come here' , percent)
+      
+      lastChange=+percent.toFixed(3)
+    }else{
+      let percent = 0
+      if (+marketStateFinal.lastPrice > +marketStateFinal.lastBuyPrice){
+        marketType = 1
+        let mainPrice =marketStateFinal.lastBuyPrice
+        percent = ((+marketStateFinal.lastPrice - +mainPrice)/+mainPrice)*100
+      }else{
+        marketType = 0
+        let mainPrice = marketStateFinal.lastPrice
+        percent = ((+marketStateFinal.lastBuyPrice - +mainPrice) / +mainPrice) * 100
+      }
+      console.log('its come here' , percent)
+      
+      lastChange=+percent.toFixed(3)
+    }
   }
   
-  if (historyData.isSuccess) {
-    Histories = historyData.data.data
-  }
+  
+
+
+  // if (historyData.isSuccess) {
+  //   Histories = historyData.data.data
+  // }
 
   if (priceData.isFetching) {
     return (
@@ -245,13 +284,20 @@ export default function Home() {
             </div>
             <Divider className="lg:hidden md:hidden py-2"></Divider>
 
-            <div className="grid grid-cols-1 md:grid-cols-5 gap-6 text-center">
+            <div className="grid grid-cols-1 md:grid-cols-6 gap-6 text-center">
               {/* Total Balance */}
               <Divider className="lg:hidden md:hidden py-2 mt-2"></Divider>
               <div className="flex flex-col items-center">
                 <span className=" text-sm mb-1 animate-pulse bg-green-400 text-black w-full rounded-md border border-gray"> قیمت بازار</span>
                 <span className="text-2xl font-bold text-white">
-                  {queryPrice[queryPrice.length-1] || 0}
+                  {marketStateFinal.lastPrice || 0}
+                </span>
+              </div>
+              <Divider className="lg:hidden md:hidden py-2 mt-2"></Divider>
+              <div className="flex flex-col items-center">
+                <span className={`text-sm mb-1 animate-pulse ${marketType ? 'bg-green-400' : 'bg-red-400'} bg-green-400 text-black w-full rounded-md border border-gray`}> {marketStateFinal.lastState == 0 ? 'تغییرات از آخرین قیمت فروش' : 'تغییران از آخرین قیمت خرید'} </span>
+                <span className="text-2xl font-bold text-white">
+                  {lastChange}{marketType  ? '+' : '-'}%
                 </span>
               </div>
               <Divider className="lg:hidden md:hidden py-2 mt-2"></Divider>
