@@ -58,7 +58,6 @@ class analyzor :
     this is for checking and calculating of rsi and market situation and call the openPosition and realy controle the market and funds
     '''
     def checkTheStatusOfPosition(self):
-        responseofTheOpeneingPosition6 = self.openPosition('sell' , 0)
         if (self.rsi < 30):
             print('==========================================================')
             print('come into the buy zone now' , self.log())
