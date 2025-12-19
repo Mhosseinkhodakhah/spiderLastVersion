@@ -3,12 +3,12 @@ import { useNavigate } from "react-router";
 import { getbalances, history, market, price } from "../../server/admin";
 import { Divider } from "@heroui/divider";
 import { useState } from "react";
-import { number } from "yup";
+
 
 export default function Home() {
   // const navigate = useNavigate();
 
-  const { data, isLoading, isError, error } = useQuery({
+  let { data, isLoading, isError, error } = useQuery<any[]>({
     queryKey: ["getBalance"],
     queryFn: getbalances,
   });
@@ -115,12 +115,13 @@ export default function Home() {
   }
 
   let btcDollar = 0
-
-  for (let i of data){
-    if (Object.keys(i)[0] === 'BTC'){
-      let balance = +i.BTC.balance
-      let btcVolum = (balance * queryPrice[queryPrice.length - 1]).toString()
-      btcDollar = +(+btcVolum).toFixed(2)
+  if ( data && data?.length > 0){
+    for (let i of data){
+      if (Object.keys(i)[0] === 'BTC'){
+        let balance = +i.BTC.balance
+        let btcVolum = (balance * queryPrice[queryPrice.length - 1]).toString()
+        btcDollar = +(+btcVolum).toFixed(2)
+      }
     }
   }
 
