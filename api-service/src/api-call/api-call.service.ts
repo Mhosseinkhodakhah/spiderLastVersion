@@ -91,7 +91,7 @@ export class ApiCallService {
         let currentTime = (new Date().getTime()/1000).toFixed()
         
         // console.log(`${this.url.price}?symbol=${currency}&resolution=${timeFrame ? timeFrame : 60}&to=${currentTime}`)
-
+        
         let rawResponse = await fetch(`${this.url.price}?symbol=${currency}&resolution=${timeFrame ? timeFrame : 60}&to=${currentTime}` , {method : 'GET'})
         
         let response = await rawResponse.json()

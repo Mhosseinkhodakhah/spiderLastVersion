@@ -11,6 +11,7 @@ import { user } from './entity/user.entity';
 import * as bcrypt from 'bcrypt';
 import { setting } from './entity/setting.entity';
 import { addSetting } from './dto/addSetting.dto';
+import { position } from './entity/positions.entity';
 
 @Injectable()
 export class AppService {
@@ -22,6 +23,7 @@ export class AppService {
     @InjectRepository(market) private readonly marketRepo: Repository<market>,
 
     @InjectRepository(transActions) private readonly transActionsRepo : Repository<transActions>,
+    @InjectRepository(position) private readonly positionRepo : Repository<position>,
     @InjectRepository(setting) private readonly settingRepo : Repository<setting>,
     @InjectRepository(user) private readonly userRepo : Repository<user>,
   ){}
@@ -135,7 +137,7 @@ export class AppService {
     }
 
     price = await this.apiCalService.getPrice()
-
+    
     return {
       success : true,
       data : price
@@ -235,7 +237,7 @@ export class AppService {
    * @param lastPrice 
    * @returns 
    */
-  async setState(state : number , rsi : string , lastPrice : string , lastState : number , lastSellPrice : string , lastBuyPrice : string){
+  async setState(state : number , rsi : string , lastPrice : string , lastState : number , lastSellPrice : string , lastBuyPrice : string , position : number){
 
     // console.log('its rsi' , lastSellPrice, lastBuyPrice)
 
@@ -269,6 +271,82 @@ export class AppService {
     marketSituation.totalBalance = totalBalance.toString()
     
     marketSituation.currencies = currenciesCount.toString()
+
+    if (position == 1){             // buy
+      console.log('sell position start')
+      let thisWeight = (10 / +lastBuyPrice)
+      let lastSellPosition = await this.positionRepo.findOne({
+        where: {
+          type: 'sell',
+          setllement: false
+        }, order: { createdAt: 'DESC' }
+      })
+
+      console.log('its last buy position for profit', lastSellPosition)
+
+      let lastSellWeight = lastSellPosition ? lastSellPosition?.weight : thisWeight
+
+
+      let profit = thisWeight - +lastSellWeight
+
+      let newPosition = this.positionRepo.create({
+        market: marketSituation,
+        weight: (10 / +lastBuyPrice).toString(),
+        price: lastBuyPrice,
+        balance: '10',
+        profit: profit.toString(),
+        type: 'buy',
+      })
+
+      if (lastSellPosition) {
+        lastSellPosition ? lastSellPosition.setllement = true : console.log('no last buy price for setllemet')
+        await this.positionRepo.save(lastSellPosition)
+      }
+
+      marketSituation.position = newPosition
+
+      await this.positionRepo.save(newPosition)
+
+    }
+
+    if (position == 0){            // sell
+      console.log('sell position start' )
+      let thisWeight = (10 / +lastSellPrice)
+      let lastBuyPosition = await this.positionRepo.findOne({where : {
+        type : 'buy',
+        setllement : false
+      } , order : {createdAt : 'DESC'}})
+
+      console.log('its last buy position for profit' , lastBuyPosition)
+
+      let lastBuyWeight = lastBuyPosition ? lastBuyPosition?.weight : thisWeight
+
+      
+      let profit = thisWeight - +lastBuyWeight
+      
+      let newPosition = this.positionRepo.create({
+        market: marketSituation,
+        weight: (10 / +lastSellPrice).toString(),
+        price: lastSellPrice,
+        balance: '10',
+        profit: profit.toString(),
+        type: 'sell',
+      })
+
+      if (lastBuyPosition){
+        lastBuyPosition ? lastBuyPosition.setllement = true : console.log('no last buy price for setllemet')
+        await this.positionRepo.save(lastBuyPosition)
+      }
+
+      marketSituation.position = newPosition
+
+      await this.positionRepo.save(newPosition)
+
+    }
+
+    if (position == 2){
+      console.log('no position opened')
+    }           // nothing
 
     await this.marketRepo.save(marketSituation)
     
@@ -343,8 +421,9 @@ export class AppService {
     }
     
   }
-
-
 }
+
+
+
 
 

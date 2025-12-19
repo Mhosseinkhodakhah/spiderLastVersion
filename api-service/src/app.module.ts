@@ -13,6 +13,7 @@ import { transActions } from './entity/transActions.entity';
 import { user } from './entity/user.entity';
 import { JwtStrategy } from './auth/jwt.strategy';
 import { setting } from './entity/setting.entity';
+import { position } from './entity/positions.entity';
 
 
 @Module({
@@ -29,7 +30,8 @@ import { setting } from './entity/setting.entity';
         market,
         transActions,
         user,
-        setting
+        setting,
+        position
       ],
       synchronize: true,
     }),
@@ -37,7 +39,8 @@ import { setting } from './entity/setting.entity';
       market,
       transActions,
       user,
-      setting
+      setting,
+      position
     ]),
     JwtModule.registerAsync({
       imports: [ConfigModule],  

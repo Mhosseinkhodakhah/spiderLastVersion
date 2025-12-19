@@ -1,43 +1,46 @@
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
-import { position } from "./positions.entity";
+import { market } from "./market.entity";
 
 
 
-@Entity('market')
-export class market {
+@Entity('position')
+export class position {
 
     @PrimaryGeneratedColumn('uuid')
     id : string
 
-    @Column({ type: 'int' , default : 0})
-    state: number
-
-    @OneToOne(()=>position , (position) => position.market)
-    position: position
+    @OneToOne(()=>market , (marketState) => marketState.position)
+    market: market
     
-    @Column({ type: 'int' , default : 0})
-    lastState: number
+    @Column({ type: 'varchar' , default : '0'})
+    weight: string
 
     @Column({type : 'varchar' , default : '45'})
-    rsi : string
+    price : string
 
     @Column({type : 'varchar' , default : '0'})
-    totalBalance : string
+    balance : string
 
     @Column({type : 'varchar' , default : '0'})
     profit : string
 
-    @Column({type : 'varchar' , default : '1'})
-    currencies : string
+    @Column({type : 'varchar' , default : '0'})
+    type : string
+
+    @Column({type : 'varchar' , default : 'BTCUSDT'})
+    currencie : string
+    
+    @Column({type : 'bool' , default : false})
+    setllement : boolean
 
     @Column({type : 'varchar' , default : '0'})
-    lastPrice : string
+    date : string
 
     @Column({type : 'varchar' , default : '0'})
-    lastSellPrice : string
+    time : string
 
-    @Column({type : 'varchar' , default : '0'})
-    lastBuyPrice : string
+    @Column({ type: 'varchar', default: '0' })
+    milisecond : string
 
     @CreateDateColumn()
     createdAt: Date;

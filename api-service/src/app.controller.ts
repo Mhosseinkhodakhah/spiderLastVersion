@@ -42,8 +42,8 @@ export class AppController {
 
   @Post('/market')
   // @UseGuards(JwtAuthGuard)
-  setState(@Query('state') state : number , @Query('rsi') rsi : string , @Query('lastPrice') lastPrice : string , @Query('lastSellPrice') lastSellPrice : string , @Query('lastBuyPrice') lastBuyPrice : string , @Query('lastState') lastState : number): {} {
-    return this.appService.setState(state , rsi , lastPrice , lastState ,lastSellPrice , lastBuyPrice);
+  setState(@Query('state') state : number , @Query('position') position : number , @Query('rsi') rsi : string , @Query('lastPrice') lastPrice : string , @Query('lastSellPrice') lastSellPrice : string , @Query('lastBuyPrice') lastBuyPrice : string , @Query('lastState') lastState : number): {} {
+    return this.appService.setState(state , rsi , lastPrice , lastState ,lastSellPrice , lastBuyPrice , position);
   }
 
   @Post('login')
