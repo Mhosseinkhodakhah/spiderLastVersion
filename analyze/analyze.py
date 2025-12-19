@@ -58,6 +58,7 @@ class analyzor :
     this is for checking and calculating of rsi and market situation and call the openPosition and realy controle the market and funds
     '''
     def checkTheStatusOfPosition(self):
+        responseofTheOpeneingPosition6 = self.openPosition('sell' , 0)
         if (self.rsi < 30):
             print('==========================================================')
             print('come into the buy zone now' , self.log())
@@ -274,6 +275,7 @@ class analyzor :
             
             response = requests.post('https://apiv2.nobitex.ir/market/orders/add' , data=body , headers={'Authorization' : self.token})
             mainResponse = response.json()
+            print('its response of the open position' , mainResponse)
             if ('status' not in mainResponse or mainResponse['status'] != 'ok'):
                 print('==========================================================')
                 print('error in opening position' , mainResponse)
@@ -320,7 +322,7 @@ while True:
     print('start the runner' , myobj)
     print('==========================================================')
     instance.start()
-    time.sleep(60)
+    time.sleep(6000)
     # elif (int(minute) == 59 or int(minute) == 45 or int(minute) == 15):
     #     print('==========================================================')
     #     print('run the update state' , myobj.minute)
