@@ -2,10 +2,6 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { 
-  TrendingUp, 
-  TrendingDown, 
-  DollarSign, 
-  PieChart,
   Shield,
   Zap,
   BarChart3,
@@ -13,19 +9,17 @@ import {
   Coins,
   Wallet,
   History,
-  Globe
 } from "lucide-react";
-import { getbalances, history, market, price } from "../../server/admin";
 import { Navigate, useNavigate } from "react-router";
 
 
 export default function LandingPage() {
     // State for animated counters
-    const [counterValues, setCounterValues] = useState({
-        totalBalance: 0,
-        activeCurrencies: 0,
-        priceChange: 0
-    });
+    // const [counterValues, setCounterValues] = useState({
+    //     totalBalance: 0,
+    //     activeCurrencies: 0,
+    //     priceChange: 0
+    // });
     const navigate = useNavigate();
 
   // // API Queries
@@ -34,41 +28,41 @@ export default function LandingPage() {
   //   queryFn: getbalances,
   // });
 
-  const { data: priceData } = useQuery({
-    queryKey: ["getPrice"],
-    queryFn: price,
-  });
+  // const { data: priceData } = useQuery({
+  //   queryKey: ["getPrice"],
+  //   queryFn: price,
+  // });
 
   // const { data: historyData } = useQuery({
   //   queryKey: ["getHistory"],
   //   queryFn: history,
   // });
 
-  const { data: marketState } = useQuery({
-    queryKey: ["getMarket"],
-    queryFn: market,
-  });
+  // const { data: marketState } = useQuery({
+  //   queryKey: ["getMarket"],
+  //   queryFn: market,
+  // });
 
   // Calculate market stats
-  const calculateMarketStats = () => {
-    if (!marketState?.data?.data?.length) return null;
+  // const calculateMarketStats = () => {
+  //   if (!marketState?.data?.data?.length) return null;
     
-    const marketData = marketState.data.data[0];
-    const totalBalance = +marketData.totalBalance || 0;
-    const previousBalance = +marketState.data.data[marketState.data.data.length - 1]?.totalBalance || 0;
-    const priceChange = previousBalance ? ((totalBalance - previousBalance) / previousBalance) * 100 : 0;
+  //   const marketData = marketState.data.data[0];
+  //   const totalBalance = +marketData.totalBalance || 0;
+  //   const previousBalance = +marketState.data.data[marketState.data.data.length - 1]?.totalBalance || 0;
+  //   const priceChange = previousBalance ? ((totalBalance - previousBalance) / previousBalance) * 100 : 0;
     
-    return {
-      isBullish: priceChange > 0,
-      totalBalance,
-      activeCurrencies: marketData.currencies || 0,
-      priceChange: Math.abs(priceChange),
-      rsi: +marketData.rsi || 50,
-      marketStatus: priceChange > 0 ? 'bullish' : 'bearish'
-    };
-  };
+  //   return {
+  //     isBullish: priceChange > 0,
+  //     totalBalance,
+  //     activeCurrencies: marketData.currencies || 0,
+  //     priceChange: Math.abs(priceChange),
+  //     rsi: +marketData.rsi || 50,
+  //     marketStatus: priceChange > 0 ? 'bullish' : 'bearish'
+  //   };
+  // };
 
-  const marketStats = calculateMarketStats();
+  // const marketStats = calculateMarketStats();
 
   // Hero Section
   const HeroSection = () => (
@@ -158,9 +152,9 @@ export default function LandingPage() {
                       <div className="w-3 h-3 rounded-full bg-green-500 mr-2"></div>
                       <span className="text-gray-300">Live Portfolio</span>
                     </div>
-                    <div className={`px-3 py-1 rounded-full ${marketStats?.isBullish ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'}`}>
+                    {/* <div className={`px-3 py-1 rounded-full ${marketStats?.isBullish ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'}`}>
                       {marketStats?.isBullish ?  priceData?.data[priceData?.data?.length - 1] - priceData?.data[0] > 0 ? (((priceData?.data[priceData?.data?.length - 1] - priceData?.data[0]) / priceData?.data[priceData?.data?.length - 1] )* 100).toFixed(3) : (((priceData?.data[priceData?.data?.length - 1] - priceData?.data[0]) / priceData?.data[0] )* 100).toFixed(3) : priceData?.data[priceData?.data?.length - 1] - priceData?.data[0] > 0 ? (((priceData?.data[priceData?.data?.length - 1] - priceData?.data[0]) / priceData?.data[priceData?.data?.length - 1] )* 100 ).toFixed(3): (((priceData?.data[priceData?.data?.length - 1] - priceData?.data[0]) / priceData?.data[0] )* 100).toFixed(3)  } Today
-                    </div>
+                    </div> */}
                   </div>
                   
                   {/* Simplified Chart */}
@@ -170,7 +164,7 @@ export default function LandingPage() {
                       <path
                         d="M0,150 Q100,50 200,100 Q300,150 400,50"
                         fill="none"
-                        stroke={marketStats?.isBullish ? "#10B981" : "#EF4444"}
+                        // stroke={marketStats?.isBullish ? "#10B981" : "#EF4444"}
                         strokeWidth="2"
                       />
                     </svg>
