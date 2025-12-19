@@ -14,6 +14,7 @@ class analyzor :
         self.lastSellPrice = 0
         self.lastBuyPrice = 0
         self.lastState = 0
+        self.position = 2
         self.token= 'Token e683b1a322bae2ea76783b1551509dc70114b471' 
         pass
     
@@ -22,7 +23,7 @@ class analyzor :
         currentStateRespons = requests.get('http://localhost:4000/market')
         currentState = currentStateRespons.json()
         if (len(currentState['data']) == 0):
-            requests.post(f'http://localhost:4000/market?state={self.state}&rsi={self.rsi}&lastPrice={self.lastPrice}&lastSellPrice={self.lastSellPrice}&lastBuyPrice={self.lastBuyPrice}&lastState={self.lastState}')
+            requests.post(f'http://localhost:4000/market?state={self.state}&rsi={self.rsi}&lastPrice={self.lastPrice}&lastSellPrice={self.lastSellPrice}&lastBuyPrice={self.lastBuyPrice}&lastState={self.lastState}&position={self.position}')
         else:
             self.state = int(currentState['data'][0]['state'])
             self.lastPrice = float(currentState['data'][0]['lastPrice'])
@@ -58,6 +59,7 @@ class analyzor :
     this is for checking and calculating of rsi and market situation and call the openPosition and realy controle the market and funds
     '''
     def checkTheStatusOfPosition(self):
+        self.position = 2
         if (self.rsi < 30):
             print('==========================================================')
             print('come into the buy zone now' , self.log())
@@ -71,7 +73,8 @@ class analyzor :
                     self.state += 1
                     self.lastBuyPrice = self.lastPrice
                     self.lastState = 1
-                    requests.post(f'http://localhost:4000/market?state={self.state}&rsi={self.rsi}&lastPrice={self.lastPrice}&lastSellPrice={self.lastSellPrice}&lastBuyPrice={self.lastBuyPrice}&lastState={self.lastState}')
+                    self.position = 1
+                    requests.post(f'http://localhost:4000/market?state={self.state}&rsi={self.rsi}&lastPrice={self.lastPrice}&lastSellPrice={self.lastSellPrice}&lastBuyPrice={self.lastBuyPrice}&lastState={self.lastState}&position={self.position}')
                     print('==========================================================')
                     print('first step for buy after' , self.log())
                     print('==========================================================')
@@ -84,7 +87,7 @@ class analyzor :
                 print('==========================================================')
                 print('second step for buy befor' , self.log())
                 print('==========================================================')
-                requests.post(f'http://localhost:4000/market?state={self.state}&rsi={self.rsi}&lastPrice={self.lastPrice}&lastSellPrice={self.lastSellPrice}&lastBuyPrice={self.lastBuyPrice}&lastState={self.lastState}')
+                requests.post(f'http://localhost:4000/market?state={self.state}&rsi={self.rsi}&lastPrice={self.lastPrice}&lastSellPrice={self.lastSellPrice}&lastBuyPrice={self.lastBuyPrice}&lastState={self.lastState}&position={self.position}')
                 print('==========================================================')
                 print('second step for buy after' , self.log())
                 print('==========================================================')
@@ -103,7 +106,8 @@ class analyzor :
                             self.state += 1
                             self.lastBuyPrice = self.lastPrice
                             self.lastState = 1
-                            requests.post(f'http://localhost:4000/market?state={self.state}&rsi={self.rsi}&lastPrice={self.lastPrice}&lastSellPrice={self.lastSellPrice}&lastBuyPrice={self.lastBuyPrice}&lastState={self.lastState}')
+                            self.position = 1
+                            requests.post(f'http://localhost:4000/market?state={self.state}&rsi={self.rsi}&lastPrice={self.lastPrice}&lastSellPrice={self.lastSellPrice}&lastBuyPrice={self.lastBuyPrice}&lastState={self.lastState}&position={self.position}')
                             print('==========================================================')
                             print('third step for buy after in the 5 percent' , self.log())
                             print('==========================================================')
@@ -127,7 +131,8 @@ class analyzor :
                         self.state += 1
                         self.lastBuyPrice = self.lastPrice
                         self.lastState = 1
-                        requests.post(f'http://localhost:4000/market?state={self.state}&rsi={self.rsi}&lastPrice={self.lastPrice}&lastSellPrice={self.lastSellPrice}&lastBuyPrice={self.lastBuyPrice}&lastState={self.lastState}')
+                        self.position = 1
+                        requests.post(f'http://localhost:4000/market?state={self.state}&rsi={self.rsi}&lastPrice={self.lastPrice}&lastSellPrice={self.lastSellPrice}&lastBuyPrice={self.lastBuyPrice}&lastState={self.lastState}&position={self.position}')
                         print('==========================================================')
                         print('forth step for buy when last state was sell state after' , self.log())
                         print('==========================================================')
@@ -155,7 +160,7 @@ class analyzor :
                 print('==========================================================')
                 print('second step for sell befor' , self.log())
                 print('==========================================================')
-                requests.post(f'http://localhost:4000/market?state={self.state}&rsi={self.rsi}&lastPrice={self.lastPrice}&lastSellPrice={self.lastSellPrice}&lastBuyPrice={self.lastBuyPrice}&lastState={self.lastState}')
+                requests.post(f'http://localhost:4000/market?state={self.state}&rsi={self.rsi}&lastPrice={self.lastPrice}&lastSellPrice={self.lastSellPrice}&lastBuyPrice={self.lastBuyPrice}&lastState={self.lastState}&position={self.position}')
                 print('==========================================================')
                 print('second step for sell after' , self.log())
                 print('==========================================================')
@@ -174,7 +179,8 @@ class analyzor :
                             self.state -= 1
                             self.lastSellPrice = self.lastPrice
                             self.lastState = 0
-                            requests.post(f'http://localhost:4000/market?state={self.state}&rsi={self.rsi}&lastPrice={self.lastPrice}&lastSellPrice={self.lastSellPrice}&lastBuyPrice={self.lastBuyPrice}&lastState={self.lastState}')
+                            self.position = 0
+                            requests.post(f'http://localhost:4000/market?state={self.state}&rsi={self.rsi}&lastPrice={self.lastPrice}&lastSellPrice={self.lastSellPrice}&lastBuyPrice={self.lastBuyPrice}&lastState={self.lastState}&position={self.position}')
                             print('==========================================================')
                             print('third step for sell after in the 5 percent' , self.log())
                             print('==========================================================')
@@ -198,7 +204,8 @@ class analyzor :
                         self.state -= 1
                         self.lastSellPrice = self.lastPrice
                         self.lastState = 0
-                        requests.post(f'http://localhost:4000/market?state={self.state}&rsi={self.rsi}&lastPrice={self.lastPrice}&lastSellPrice={self.lastSellPrice}&lastBuyPrice={self.lastBuyPrice}&lastState={self.lastState}')
+                        self.position = 0
+                        requests.post(f'http://localhost:4000/market?state={self.state}&rsi={self.rsi}&lastPrice={self.lastPrice}&lastSellPrice={self.lastSellPrice}&lastBuyPrice={self.lastBuyPrice}&lastState={self.lastState}&position={self.position}')
                         print('==========================================================')
                         print('forth step for buy when last state was sell state after' , self.log())
                         print('==========================================================')
@@ -222,7 +229,8 @@ class analyzor :
                     self.state -= 1
                     self.lastSellPrice = self.lastPrice
                     self.lastState = 0
-                    requests.post(f'http://localhost:4000/market?state={self.state}&rsi={self.rsi}&lastPrice={self.lastPrice}&lastSellPrice={self.lastSellPrice}&lastBuyPrice={self.lastBuyPrice}&lastState={self.lastState}')
+                    self.position = 0
+                    requests.post(f'http://localhost:4000/market?state={self.state}&rsi={self.rsi}&lastPrice={self.lastPrice}&lastSellPrice={self.lastSellPrice}&lastBuyPrice={self.lastBuyPrice}&lastState={self.lastState}&position={self.position}')
                     print('==========================================================')
                     print('first step for sell after' , self.log())
                     print('==========================================================')
@@ -243,7 +251,7 @@ class analyzor :
             print('==========================================================')
             if (self.state < 0):
                 self.state = 0
-            requests.post(f'http://localhost:4000/market?state={self.state}&rsi={self.rsi}&lastPrice={self.lastPrice}&lastSellPrice={self.lastSellPrice}&lastBuyPrice={self.lastBuyPrice}&lastState={self.lastState}')
+            requests.post(f'http://localhost:4000/market?state={self.state}&rsi={self.rsi}&lastPrice={self.lastPrice}&lastSellPrice={self.lastSellPrice}&lastBuyPrice={self.lastBuyPrice}&lastState={self.lastState}&position={self.position}')
     
 
 
@@ -297,7 +305,7 @@ class analyzor :
         currentStateRespons = requests.get('http://localhost:4000/market')
         currentState = currentStateRespons.json()
         if (len(currentState['data']) == 0):
-            requests.post(f'http://localhost:4000/market?state={self.state}&rsi={self.rsi}&lastPrice={self.lastPrice}&lastSellPrice={self.lastSellPrice}&lastBuyPrice={self.lastBuyPrice}&lastState={self.lastState}')
+            requests.post(f'http://localhost:4000/market?state={self.state}&rsi={self.rsi}&lastPrice={self.lastPrice}&lastSellPrice={self.lastSellPrice}&lastBuyPrice={self.lastBuyPrice}&lastState={self.lastState}&position={self.position}')
         else:
             self.state = int(currentState['data'][0]['state'])
             self.lastPrice = float(currentState['data'][0]['lastPrice'])
@@ -307,7 +315,7 @@ class analyzor :
 
         allPrices = self.gettingPrices()
         self.rsi = self.calculateRSI(allPrices.json()['data'])
-        requests.post(f'http://localhost:4000/market?state={self.state}&rsi={self.rsi}&lastPrice={self.lastPrice}&lastSellPrice={self.lastSellPrice}&lastBuyPrice={self.lastBuyPrice}&lastState={self.lastState}')
+        requests.post(f'http://localhost:4000/market?state={self.state}&rsi={self.rsi}&lastPrice={self.lastPrice}&lastSellPrice={self.lastSellPrice}&lastBuyPrice={self.lastBuyPrice}&lastState={self.lastState}&position={self.position}')
 
         
 
@@ -321,7 +329,7 @@ while True:
     print('start the runner' , myobj)
     print('==========================================================')
     instance.start()
-    time.sleep(6000)
+    time.sleep(60)
     # elif (int(minute) == 59 or int(minute) == 45 or int(minute) == 15):
     #     print('==========================================================')
     #     print('run the update state' , myobj.minute)
