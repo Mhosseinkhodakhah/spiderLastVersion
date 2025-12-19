@@ -359,7 +359,10 @@ export class AppService {
 
   
   async getState(){
-    let lastMarketSituations = await this.marketRepo.find({order : {createdAt : 'DESC'}})
+    let lastMarketSituations = await this.marketRepo.find({order : {createdAt : 'DESC'} , take : 10})
+    let first = await this.marketRepo.find()
+
+    let all = lastMarketSituations.concat(first)
 
     // let allDeleted = ['09632d2f-99ba-47bf-aea6-f646f72ea20e' , 'd7dc8e33-a91f-41db-a37f-6ce4c2de7085' , '']
 
@@ -375,7 +378,7 @@ export class AppService {
 
     return {
       success : true,
-      data : lastMarketSituations
+      data : all
     }
 
   }
