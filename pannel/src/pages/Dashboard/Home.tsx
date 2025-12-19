@@ -33,9 +33,9 @@ export default function Home() {
 
   const [btcPrice, setBtcPrice] = useState<string>(''); 
   
-  let queryPrice: any;
+  let queryPrice: any = [];
 
-  let Histories: any;
+  let Histories: any = []
 
   let marketStateData: any;
 
