@@ -83,16 +83,13 @@ export class ApiCallService {
      */
     async getPrice(currenci ?: string , timeFrame ?: timeFrameType) : Promise<string[]>{
         
-
-
-
         let currency = currenci ? currenci : 'BTCUSDT'
         
         let currentTime = (new Date().getTime()/1000).toFixed()
         
         // console.log(`${this.url.price}?symbol=${currency}&resolution=${timeFrame ? timeFrame : 60}&to=${currentTime}`)
         
-        let rawResponse = await fetch(`${this.url.price}?symbol=${currency}&resolution=${timeFrame ? timeFrame : 60}&to=${currentTime}` , {method : 'GET'})
+        let rawResponse = await fetch(`${this.url.price}?symbol=${currency}&resolution=${timeFrame ? timeFrame : 15}&to=${currentTime}` , {method : 'GET'})
         
         let response = await rawResponse.json()
 
