@@ -238,9 +238,9 @@ export class AppService {
    * @returns 
    */
   async setState(state : number , rsi : string , lastPrice : string , lastState : number , lastSellPrice : string , lastBuyPrice : string , position : number){
+    
 
-    try {
-      
+    try {      
     // console.log('its rsi' , lastSellPrice, lastBuyPrice)
     console.log('its staet' , position)
     let marketSituation = this.marketRepo.create({
@@ -274,6 +274,8 @@ export class AppService {
     
     marketSituation.currencies = currenciesCount.toString()
 
+    let savedNewSituation = await this.marketRepo.save(marketSituation)
+
     if (position == 1){             // buy
       console.log('sell position start')
       let thisWeight = (10 / +lastBuyPrice)
@@ -292,7 +294,7 @@ export class AppService {
       let profit = thisWeight - +lastSellWeight
 
       let newPosition = this.positionRepo.create({
-        market: marketSituation,
+        market: savedNewSituation,
         weight: (10 / +lastBuyPrice).toString(),
         price: lastBuyPrice,
         balance: '10',
@@ -305,9 +307,11 @@ export class AppService {
         await this.positionRepo.save(lastSellPosition)
       }
 
-      marketSituation.position = newPosition
+      savedNewSituation.position = newPosition
 
       await this.positionRepo.save(newPosition)
+
+      await this.marketRepo.save(savedNewSituation)
 
     }
 
@@ -327,7 +331,7 @@ export class AppService {
       let profit = thisWeight - +lastBuyWeight
       
       let newPosition = this.positionRepo.create({
-        market: marketSituation,
+        market: savedNewSituation,
         weight: (10 / +lastSellPrice).toString(),
         price: lastSellPrice,
         balance: '10',
@@ -339,82 +343,15 @@ export class AppService {
         lastBuyPosition ? lastBuyPosition.setllement = true : console.log('no last buy price for setllemet')
         await this.positionRepo.save(lastBuyPosition)
       }
-      marketSituation.position = newPosition
+      savedNewSituation.position = newPosition
       await this.positionRepo.save(newPosition)
+      await this.marketRepo.save(savedNewSituation)
     }
 
-    let newPositionl;
 
     if (position == 2){
       console.log('no position opened')
-      console.log('sell position start')
-      let thisWeight = (10 / +lastBuyPrice)
-      let lastSellPosition = await this.positionRepo.findOne({
-        where: {
-          type: 'sell',
-          setllement: false
-        }, order: { createdAt: 'DESC' }
-      })
-
-
-      console.log('its last buy position for profit', lastSellPosition)
-
-      let lastSellWeight = lastSellPosition ? lastSellPosition?.weight : thisWeight
-
-
-      let profit = thisWeight - +lastSellWeight
-
-      console.log('22')
-
-      let newPosition = this.positionRepo.create({
-        market: marketSituation,
-        weight: (10 / +lastBuyPrice).toString(),
-        price: lastBuyPrice,
-        balance: '10',
-        profit: profit.toString(),
-        type: 'buy',
-      })
-
-      console.log('33')
-
-      if (lastSellPosition) {
-         console.log('no last buy price for setllemet')
-        lastSellPosition.setllement = true 
-        await this.positionRepo.save(lastSellPosition)
-      }
-
-      console.log('44')
-
-      marketSituation.position = newPosition
-
-      console.log('55')
-
-      newPositionl = await this.positionRepo.save(newPosition)
-
-      console.log('66')
-
     }           // nothing
-
-      console.log('77')
-    let stateFFF = await this.marketRepo.save(marketSituation)
-    
-    newPositionl.market = stateFFF
-    await this.positionRepo.save(newPositionl)
-
-    let all = await this.positionRepo.find({ where : {
-      id : newPositionl.id
-    },
-      relations : ['market']
-    })
-
-
-    let statttt = await this.marketRepo.find({where : {
-      id : stateFFF.id
-    } , relations : ['position']})
-
-    console.log('alll' , all)
-    console.log('sss' , statttt)
-
 
     return {
       success : true,
