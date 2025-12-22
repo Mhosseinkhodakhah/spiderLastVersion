@@ -383,7 +383,7 @@ export class AppService {
 
       console.log('44')
 
-      // marketSituation.position = newPosition
+      marketSituation.position = newPosition
 
       console.log('55')
 

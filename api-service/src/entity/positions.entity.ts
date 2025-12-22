@@ -9,7 +9,7 @@ export class position {
     @PrimaryGeneratedColumn('uuid')
     id : string
 
-    @OneToOne(()=>market , (marketState) => marketState.position)
+    @OneToOne(()=>market , (market) => market.position)
     @JoinColumn()
     market: market
     
