@@ -152,7 +152,7 @@ class analyzor :
                 print('no step for buy its not clear for me' , self.log())
                 print('==========================================================')
                 pass
-        if (self.rsi > 30):
+        if (self.rsi > 70):
             print('==========================================================')
             print('come into the sell zone now' , self.log())
             print('==========================================================')
