@@ -240,7 +240,7 @@ export class AppService {
   async setState(state : number , rsi : string , lastPrice : string , lastState : number , lastSellPrice : string , lastBuyPrice : string , position : number){
 
     // console.log('its rsi' , lastSellPrice, lastBuyPrice)
-
+    console.log('its staet' , position)
     let marketSituation = this.marketRepo.create({
       state : +state,
       rsi:rsi.toString(),
