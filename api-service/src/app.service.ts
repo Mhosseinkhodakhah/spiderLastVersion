@@ -371,7 +371,8 @@ export class AppService {
       })
 
       if (lastSellPosition) {
-        lastSellPosition ? lastSellPosition.setllement = true : console.log('no last buy price for setllemet')
+         console.log('no last buy price for setllemet')
+        lastSellPosition.setllement = true 
         await this.positionRepo.save(lastSellPosition)
       }
 
