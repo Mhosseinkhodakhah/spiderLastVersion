@@ -307,9 +307,9 @@ export class AppService {
         await this.positionRepo.save(lastSellPosition)
       }
 
-      savedNewSituation.position = newPosition
-
-      await this.positionRepo.save(newPosition)
+      let savedPosition = await this.positionRepo.save(newPosition)
+      
+      savedNewSituation.position = savedPosition
 
       await this.marketRepo.save(savedNewSituation)
 
@@ -343,8 +343,8 @@ export class AppService {
         lastBuyPosition ? lastBuyPosition.setllement = true : console.log('no last buy price for setllemet')
         await this.positionRepo.save(lastBuyPosition)
       }
-      savedNewSituation.position = newPosition
-      await this.positionRepo.save(newPosition)
+      let savedPosition = await this.positionRepo.save(newPosition)
+      savedNewSituation.position = savedPosition
       await this.marketRepo.save(savedNewSituation)
     }
 
