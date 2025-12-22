@@ -343,6 +343,8 @@ export class AppService {
       await this.positionRepo.save(newPosition)
     }
 
+    let newPositionl;
+
     if (position == 2){
       console.log('no position opened')
       console.log('sell position start')
@@ -387,7 +389,7 @@ export class AppService {
 
       console.log('55')
 
-      await this.positionRepo.save(newPosition)
+      newPositionl = await this.positionRepo.save(newPosition)
 
       console.log('66')
 
@@ -396,9 +398,13 @@ export class AppService {
       console.log('77')
     let stateFFF = await this.marketRepo.save(marketSituation)
     
-    let all = await this.positionRepo.find({
+    let all = await this.positionRepo.find({ where : {
+      id : newPositionl.id
+    },
       relations : ['market']
     })
+
+
     let statttt = await this.marketRepo.find({where : {
       id : stateFFF.id
     } , relations : ['position']})
