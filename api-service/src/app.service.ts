@@ -383,7 +383,7 @@ export class AppService {
 
       console.log('44')
 
-      marketSituation.position = newPosition
+      // marketSituation.position = newPosition
 
       console.log('55')
 
@@ -394,8 +394,17 @@ export class AppService {
     }           // nothing
 
       console.log('77')
-    await this.marketRepo.save(marketSituation)
+    let state = await this.marketRepo.save(marketSituation)
     
+    let all = await this.positionRepo.find()
+    let statttt = await this.marketRepo.find({where : {
+      id : state.id
+    } , relations : ['position']})
+
+    console.log('alll' , all)
+    console.log('sss' , statttt)
+
+
     return {
       success : true,
     }
