@@ -277,7 +277,7 @@ export class AppService {
     let savedNewSituation = await this.marketRepo.save(marketSituation)
 
     if (position == 1){             // buy
-      console.log('sell position start')
+      console.log('buy position start')
       let thisWeight = (10 / +lastBuyPrice)
       let lastSellPosition = await this.positionRepo.findOne({
         where: {
@@ -357,7 +357,6 @@ export class AppService {
       success : true,
     }
     
-
     } catch (error) {
       console.log('its error' , error)
       return {
@@ -370,8 +369,8 @@ export class AppService {
 
   
   async getState(){
-    let lastMarketSituations = await this.marketRepo.find({order : {createdAt : 'DESC'} , take : 10})
-    let first = await this.marketRepo.find()
+    let lastMarketSituations = await this.marketRepo.find({order : {createdAt : 'DESC'} , relations : ['position'], take : 10})
+    let first = await this.marketRepo.find({relations : ['position']})
 
     let all = lastMarketSituations.concat(first[0])
 
