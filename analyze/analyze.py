@@ -60,11 +60,11 @@ class analyzor :
     '''
     def checkTheStatusOfPosition(self):
         self.position = 2
-        if (self.rsi < 50):
+        if (self.rsi < 30):
             print('==========================================================')
             print('come into the buy zone now' , self.log())
             print('==========================================================')
-            if (self.state == 2):
+            if (self.state == 0):
                 print('==========================================================')
                 print('first step for buy befor' , self.log())
                 print('==========================================================')
