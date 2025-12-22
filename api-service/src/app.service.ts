@@ -354,12 +354,15 @@ export class AppService {
         }, order: { createdAt: 'DESC' }
       })
 
+
       console.log('its last buy position for profit', lastSellPosition)
 
       let lastSellWeight = lastSellPosition ? lastSellPosition?.weight : thisWeight
 
 
       let profit = thisWeight - +lastSellWeight
+
+      console.log('22')
 
       let newPosition = this.positionRepo.create({
         market: marketSituation,
@@ -370,18 +373,27 @@ export class AppService {
         type: 'buy',
       })
 
+      console.log('33')
+
       if (lastSellPosition) {
          console.log('no last buy price for setllemet')
         lastSellPosition.setllement = true 
         await this.positionRepo.save(lastSellPosition)
       }
 
+      console.log('44')
+
       marketSituation.position = newPosition
+
+      console.log('55')
 
       await this.positionRepo.save(newPosition)
 
+      console.log('66')
+
     }           // nothing
 
+      console.log('77')
     await this.marketRepo.save(marketSituation)
     
     return {
