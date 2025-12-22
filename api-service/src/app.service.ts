@@ -394,11 +394,11 @@ export class AppService {
     }           // nothing
 
       console.log('77')
-    let state = await this.marketRepo.save(marketSituation)
+    let stateFFF = await this.marketRepo.save(marketSituation)
     
     let all = await this.positionRepo.find()
     let statttt = await this.marketRepo.find({where : {
-      id : state.id
+      id : stateFFF.id
     } , relations : ['position']})
 
     console.log('alll' , all)
