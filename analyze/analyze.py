@@ -60,7 +60,7 @@ class analyzor :
     '''
     def checkTheStatusOfPosition(self):
         self.position = 2
-        if (self.rsi < 40):
+        if (self.rsi < 50):
             print('==========================================================')
             print('come into the buy zone now' , self.log())
             print('==========================================================')
@@ -317,8 +317,6 @@ class analyzor :
         self.rsi = self.calculateRSI(allPrices.json()['data'])
         requests.post(f'http://localhost:4000/market?state={self.state}&rsi={self.rsi}&lastPrice={self.lastPrice}&lastSellPrice={self.lastSellPrice}&lastBuyPrice={self.lastBuyPrice}&lastState={self.lastState}&position={self.position}')
 
-        
-
 instance = analyzor()
 
 while True:
@@ -330,14 +328,3 @@ while True:
     print('==========================================================')
     instance.start()
     time.sleep(60)
-    # elif (int(minute) == 59 or int(minute) == 45 or int(minute) == 15):
-    #     print('==========================================================')
-    #     print('run the update state' , myobj.minute)
-    #     print('==========================================================')
-    #     instance.updateState()
-    #     time.sleep(60)
-    # # else:
-    #     print('==========================================================')
-    #     print('script is sleep yet' , myobj.minute)
-    #     print('==========================================================')
-    #     time.sleep(60)
