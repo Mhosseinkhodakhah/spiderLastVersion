@@ -396,7 +396,9 @@ export class AppService {
       console.log('77')
     let stateFFF = await this.marketRepo.save(marketSituation)
     
-    let all = await this.positionRepo.find()
+    let all = await this.positionRepo.find({
+      relations : ['market']
+    })
     let statttt = await this.marketRepo.find({where : {
       id : stateFFF.id
     } , relations : ['position']})
