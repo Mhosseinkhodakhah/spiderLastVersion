@@ -398,6 +398,9 @@ export class AppService {
       console.log('77')
     let stateFFF = await this.marketRepo.save(marketSituation)
     
+    newPositionl.market = stateFFF
+    await this.positionRepo.save(newPositionl)
+
     let all = await this.positionRepo.find({ where : {
       id : newPositionl.id
     },
