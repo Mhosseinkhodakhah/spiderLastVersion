@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { position } from "./positions.entity";
 
 
@@ -13,6 +13,7 @@ export class market {
     state: number
 
     @OneToOne(()=>position , (position) => position.market)
+    @JoinColumn()
     position: position
     
     @Column({ type: 'int' , default : 0})
