@@ -5,7 +5,7 @@ import { TokenizeService } from './tokenize/tokenize.service';
 import { timeFrameType } from './dto/types';
 import { market } from './entity/market.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { IsNull, Not, Repository } from 'typeorm';
 import { transActions } from './entity/transActions.entity';
 import { user } from './entity/user.entity';
 import * as bcrypt from 'bcrypt';
@@ -308,7 +308,7 @@ export class AppService {
       }
 
       let savedPosition = await this.positionRepo.save(newPosition)
-      
+
       savedNewSituation.position = savedPosition
 
       await this.marketRepo.save(savedNewSituation)
@@ -373,7 +373,7 @@ export class AppService {
     let first = await this.marketRepo.find({relations : ['position']})
 
     let all = lastMarketSituations.concat(first[0])
-
+    
     // let allDeleted = ['09632d2f-99ba-47bf-aea6-f646f72ea20e' , 'd7dc8e33-a91f-41db-a37f-6ce4c2de7085' , '']
 
     // let allD = await this.marketRepo.find({
@@ -391,6 +391,20 @@ export class AppService {
       data : all
     }
 
+  }
+
+
+
+  async getPositions(){
+    let positions = await this.positionRepo.find({
+      where : {
+        market : Not(IsNull())
+      } , order : {createdAt: 'DESC'}
+    })
+    return {
+      success : true,
+      data : positions
+    }
   }
 
   /**

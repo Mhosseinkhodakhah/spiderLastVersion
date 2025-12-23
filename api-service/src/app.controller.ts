@@ -40,6 +40,13 @@ export class AppController {
   }
 
 
+  @Get('/positions')
+  @UseGuards(JwtAuthGuard)
+  getPositions(): {} {
+    return this.appService.getPositions();
+  }
+
+
   @Post('/market')
   // @UseGuards(JwtAuthGuard)
   setState(@Query('state') state : number , @Query('position') position : number , @Query('rsi') rsi : string , @Query('lastPrice') lastPrice : string , @Query('lastSellPrice') lastSellPrice : string , @Query('lastBuyPrice') lastBuyPrice : string , @Query('lastState') lastState : number): {} {
