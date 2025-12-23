@@ -39,6 +39,19 @@ export const price= async ()  => {
 
 
 
+export const getPositions= async ()  => {
+  try {
+    const { data } = await instance.get("/positions");
+    console.log('its returned dataaaa' , data)
+    return data;
+  } catch (err: any) {
+    console.error(err);
+    return false;
+  }
+}
+
+
+
 export const history= async ()  => {
   try {
     const { data } = await instance.get("/transactionList");

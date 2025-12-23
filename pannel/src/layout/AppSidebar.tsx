@@ -17,12 +17,12 @@ const AppSidebar: React.FC = () => {
   const showText = isExpanded || isHovered;
 
   const menuItems = [
-    { icon: <FaWallet className="text-blue-400" size={20} />, text: 'Wallet', active: true },
-    { icon: <FaExchangeAlt className="text-gray-400" size={20} />, text: 'Exchange' },
-    { icon: <FaChartLine className="text-gray-400" size={20} />, text: 'Portfolio' },
-    { icon: <FaHistory className="text-gray-400" size={20} />, text: 'History' },
-    { icon: <FaShieldAlt className="text-gray-400" size={20} />, text: 'Security' },
-    { icon: <FaCog className="text-gray-400" size={20} />, text: 'Settings' },
+    { icon: <FaWallet className="text-blue-400" size={20} />, text: 'Wallet', link : '/dashboard'},
+    { icon: <FaExchangeAlt className="text-gray-400" size={20} />, text: 'Positions', link : '/positions' },
+    // { icon: <FaChartLine className="text-gray-400" size={20} />, text: 'Portfolio' , link : '/setting'},
+    // { icon: <FaHistory className="text-gray-400" size={20} />, text: 'History', link : '/setting' },
+    // { icon: <FaShieldAlt className="text-gray-400" size={20} />, text: 'Security', link : '/setting' },
+    { icon: <FaCog className="text-gray-400" size={20} />, text: 'Settings' , link : '/setting'},
   ];
   const navigate = useNavigate();
   return (
@@ -62,7 +62,7 @@ const AppSidebar: React.FC = () => {
                   ${showText ? 'justify-start' : 'justify-center'}
                 `}
                 onClick={()=>{
-                  navigate('/setting')
+                  navigate(`${item.link}`)
                 }}
               >
                 {item.icon}

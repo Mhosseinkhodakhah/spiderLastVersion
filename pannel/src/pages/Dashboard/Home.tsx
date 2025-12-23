@@ -94,12 +94,6 @@ export default function Home() {
     }
   }
   
-  
-
-
-  // if (historyData.isSuccess) {
-  //   Histories = historyData.data.data
-  // }
 
   if (priceData.isFetching) {
     return (
