@@ -399,7 +399,7 @@ export class AppService {
     let positions = await this.positionRepo.find({
       where : {
         market : Not(IsNull())
-      } , order : {createdAt: 'DESC'}
+      } , order : {createdAt: 'DESC'},relations : ['market']
     })
     return {
       success : true,
