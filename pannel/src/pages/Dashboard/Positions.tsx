@@ -94,6 +94,14 @@ export default function Positions() {
     queryFn: getPositions,
   });
 
+  let sumOfTheProfit = 0
+
+  if (positions && positions.data.length > 0 ){
+    for (let i of positions.data){
+      sumOfTheProfit += +i.profit
+    }
+  }
+
   const marketState = useQuery<MarketStateResponse>({
     queryKey: ["getMarket"],
     queryFn: market,
@@ -346,7 +354,7 @@ export default function Positions() {
           قیمت‌های معاملاتی
         </h2>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           {/* Buy Price Card */}
           <div className="bg-gradient-to-br from-green-900/30 to-gray-900 rounded-2xl p-6 border border-green-500/30 shadow-xl">
             <div className="flex items-center justify-between mb-6">
@@ -363,6 +371,7 @@ export default function Positions() {
                 فعال
               </span>
             </div>
+            
             <div className="text-center">
               <div className="text-5xl font-bold text-green-400 mb-2">
                 {marketStateFinal.lastBuyPrice > 0 ? formatCurrency(marketStateFinal.lastBuyPrice) : 'ناموجود'}
@@ -372,6 +381,7 @@ export default function Positions() {
               </div>
             </div>
           </div>
+          
 
           {/* Sell Price Card */}
           <div className="bg-gradient-to-br from-red-900/30 to-gray-900 rounded-2xl p-6 border border-red-500/30 shadow-xl">
@@ -395,6 +405,30 @@ export default function Positions() {
               </div>
               <div className="text-sm text-gray-400">
                 تفاوت فعلی: {lastChange.toFixed(2)}%
+              </div>
+            </div>
+          </div>
+          <div className="bg-gradient-to-br from-green-900/30 to-gray-900 rounded-2xl p-6 border border-green-500/30 shadow-xl">
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-green-500/20 rounded-lg">
+                  <ArrowUpRight className="w-6 h-6 text-green-400" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold text-white">مجموع سود حاصل</h3>
+                </div>
+              </div>
+              {/* <span className={`px-3 py-1 rounded-full text-sm font-medium ${sumOfTheProfit > 0 ? 'bg-green-500/20 text-green-400' : 'bg-gray-700 text-gray-300'}`}>
+                {sumOfTheProfit}
+              </span> */}
+            </div>
+            
+            <div className="text-center">
+              <div className="text-5xl font-bold text-green-400 mb-2">
+                {sumOfTheProfit.toFixed(8)}
+              </div>
+              <div className="text-sm text-gray-400">
+                مجموع سود دلاری: {(sumOfTheProfit * (parseFloat(queryPrice[queryPrice.length - 1]) || 0)).toFixed(3)} $
               </div>
             </div>
           </div>
@@ -453,7 +487,7 @@ export default function Positions() {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                  <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
                     <div className="space-y-2">
                       <div className="text-sm text-gray-400">قیمت ورود</div>
                       <div className="text-lg font-semibold text-white">
@@ -472,6 +506,13 @@ export default function Positions() {
                       <div className="text-sm text-gray-400">سود</div>
                       <div className={`text-lg font-semibold ${profit > 0 ? 'text-green-400' : profit < 0 ? 'text-red-400' : 'text-gray-400'}`}>
                         {profit.toFixed(8)} BTC
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <div className="text-sm text-gray-400">سود دلاری</div>
+                      <div className={`text-lg font-semibold ${profit > 0 ? 'text-green-400' : profit < 0 ? 'text-red-400' : 'text-gray-400'}`}>
+                        {+profit.toFixed(8) * (parseFloat(queryPrice[queryPrice.length - 1]) || 0)} $
                       </div>
                     </div>
                     
