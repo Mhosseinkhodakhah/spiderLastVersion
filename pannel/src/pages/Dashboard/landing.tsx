@@ -205,7 +205,7 @@ export default function LandingPage() {
                     
                     {/* ایموجی را حذف کرده و برای استفاده از تصویر خود، زیر را آنکامنت کنید */}
                     <img 
-                      src={'/logo.png'} 
+                      src={'/itslogo.jpeg'} 
                       alt="ربات معاملاتی اسپایدر" 
                       className="w-full h-full object-contain"
                     />
