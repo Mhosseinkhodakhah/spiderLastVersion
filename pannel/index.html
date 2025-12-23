@@ -1,14 +1,167 @@
 <!DOCTYPE html>
-<html lang="fa">
+<html lang="fa" dir="rtl">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/logo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
-    <title>spider crypto bot</title>
+    <!-- Favicon & App Icons -->
+    <link rel="icon" type="image/png" href="/logo.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="/logo.png" sizes="16x16" />
+    <link rel="apple-touch-icon" href="/logo.png" />
+    <link rel="manifest" href="/manifest.json" />
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#000000" />
+    <meta name="msapplication-TileColor" content="#000000" />
+    
+    <!-- Primary Meta Tags -->
+    <title>ربات معاملاتی اسپایدر | Spider Crypto Bot</title>
+    <meta name="description" content="ربات هوشمند معاملاتی ارز دیجیتال اسپایدر با هوش مصنوعی پیشرفته برای معاملات خودکار در بازار اسپات" />
+    <meta name="keywords" content="ربات معاملاتی, ارز دیجیتال, کریپتو, اسپایدر, معاملات خودکار, هوش مصنوعی, بازار اسپات" />
+    <meta name="author" content="Spider Crypto Bot" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://spiderbot.ir/" />
+    <meta property="og:title" content="ربات معاملاتی اسپایدر | Spider Crypto Bot" />
+    <meta property="og:description" content="ربات هوشمند معاملاتی ارز دیجیتال با هوش مصنوعی پیشرفته برای معاملات خودکار 24/7" />
+    <meta property="og:image" content="/logo.png" />
+    <meta property="og:image:width" content="512" />
+    <meta property="og:image:height" content="512" />
+    <meta property="og:locale" content="fa_IR" />
+    <meta property="og:site_name" content="Spider Crypto Bot" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://spiderbot.ir/" />
+    <meta property="twitter:title" content="ربات معاملاتی اسپایدر | Spider Crypto Bot" />
+    <meta property="twitter:description" content="ربات هوشمند معاملاتی ارز دیجیتال با هوش مصنوعی پیشرفته" />
+    <meta property="twitter:image" content="/logo.png" />
+    
+    <!-- PWA Configuration -->
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="اسپایدر" />
+    
+    <!-- Font Preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    
+    <!-- CSS Preload -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" />
+    
+    <!-- Persian Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    
+    <!-- Preload Logo -->
+    <link rel="preload" as="image" href="/logo.png" />
+    
+    <style>
+      /* Preloader for better UX */
+      #preloader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        transition: opacity 0.5s ease;
+      }
+      
+      .loader {
+        width: 64px;
+        height: 64px;
+        border: 5px solid #8B5CF6;
+        border-bottom-color: transparent;
+        border-radius: 50%;
+        animation: rotation 1s linear infinite;
+      }
+      
+      @keyframes rotation {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+      
+      /* Basic RTL styles */
+      body {
+        font-family: 'Vazirmatn', sans-serif;
+        margin: 0;
+        padding: 0;
+        background: #000;
+        color: #fff;
+        direction: rtl;
+      }
+      
+      /* Hide preloader when loaded */
+      body.loaded #preloader {
+        opacity: 0;
+        visibility: hidden;
+      }
+    </style>
+    
+    <script>
+      // Add preloader functionality
+      window.addEventListener('load', function() {
+        setTimeout(function() {
+          document.body.classList.add('loaded');
+          setTimeout(function() {
+            const preloader = document.getElementById('preloader');
+            if (preloader) preloader.remove();
+          }, 500);
+        }, 1000);
+      });
+      
+      // Detect system theme preference
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.add('light');
+      }
+    </script>
   </head>
-  <body dir="rtl" class="dark:bg-gray-900">
+  <body class="dark:bg-gray-900">
+    <!-- Preloader -->
+    <div id="preloader">
+      <div class="loader"></div>
+    </div>
+    
+    <!-- React Root -->
     <div id="root"></div>
+    
+    <!-- Main Script -->
     <script type="module" src="/src/main.tsx"></script>
+    
+    <!-- Service Worker for PWA (optional) -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/service-worker.js')
+            .then(registration => {
+              console.log('ServiceWorker registration successful');
+            })
+            .catch(err => {
+              console.log('ServiceWorker registration failed: ', err);
+            });
+        });
+      }
+    </script>
+    
+    <!-- Analytics Script (optional) -->
+    <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'GA_MEASUREMENT_ID');
+    </script> -->
   </body>
 </html>
