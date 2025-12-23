@@ -1,7 +1,7 @@
 const CACHE_NAME = 'spider-bot-v1';
 const urlsToCache = [
   '/',
-  '/logo.png',
+  '/itslogo.jpeg',
   '/index.html',
   '/manifest.json'
 ];
