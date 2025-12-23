@@ -11,24 +11,24 @@
   "lang": "fa",
   "icons": [
     {
-      "src": "/itslogo.jpeg",
+      "src": "/itslogo.jpg",
       "sizes": "192x192",
-      "type": "image/jpeg",
+      "type": "image/jpg",
       "purpose": "any maskable"
     },
     {
-      "src": "/itslogo.jpeg",
+      "src": "/itslogo.jpg",
       "sizes": "512x512",
-      "type": "image/jpeg",
+      "type": "image/jpg",
       "purpose": "any maskable"
     }
   ],
   "categories": ["finance", "business", "productivity"],
   "screenshots": [
     {
-      "src": "/itslogo.jpeg",
+      "src": "/itslogo.jpg",
       "sizes": "1280x720",
-      "type": "image/jpeg",
+      "type": "image/jpg",
       "label": "داشبورد ربات اسپایدر"
     }
   ]
