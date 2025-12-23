@@ -1,7 +1,7 @@
 // components/PositionsTable.tsx
-import { PositionData } from "../types";
 import { ArrowUpRight, ArrowDownRight, TrendingUp, TrendingDown, MoreVertical } from "lucide-react";
 import { useState } from "react";
+import { PositionData } from "./types";
 
 interface PositionsTableProps {
   positions: PositionData[];

@@ -246,7 +246,7 @@ positionMarkers.forEach((pos, index) => {
               price: pos.price,
               position: pos
             }))}
-            fill={pos => pos.position.type === 'buy' ? "#10B981" : "#EF4444"}
+            // fill={pos => pos.position.type === 'buy' ? "#10B981" : "#EF4444"}
             stroke="#fff"
             strokeWidth={2}
             r={6}
