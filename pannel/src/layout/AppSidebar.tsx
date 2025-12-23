@@ -19,7 +19,7 @@ const AppSidebar: React.FC = () => {
   const menuItems = [
     { icon: <FaWallet className="text-blue-400" size={20} />, text: 'Wallet', link : '/dashboard'},
     { icon: <FaExchangeAlt className="text-gray-400" size={20} />, text: 'Positions', link : '/positions' },
-    // { icon: <FaChartLine className="text-gray-400" size={20} />, text: 'Portfolio' , link : '/setting'},
+    { icon: <FaChartLine className="text-gray-400" size={20} />, text: 'chart' , link : '/chart'},
     // { icon: <FaHistory className="text-gray-400" size={20} />, text: 'History', link : '/setting' },
     // { icon: <FaShieldAlt className="text-gray-400" size={20} />, text: 'Security', link : '/setting' },
     { icon: <FaCog className="text-gray-400" size={20} />, text: 'Settings' , link : '/setting'},

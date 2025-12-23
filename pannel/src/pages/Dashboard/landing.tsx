@@ -559,9 +559,7 @@ export default function LandingPage() {
                       alt="ربات معاملاتی اسپایدر" 
                       className="w-1/3 object-contain"
                     />
-
                     </div>
-                    
                     {/* حلقه‌های چرخان */}
                     <motion.div
                       className="absolute inset-0 border-2 border-purple-300/20 rounded-full"

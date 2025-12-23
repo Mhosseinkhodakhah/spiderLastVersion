@@ -10,6 +10,7 @@ import LandingPage from "./pages/Dashboard/landing";
 import Splash from "./pages/Dashboard/splash";
 import SettingsPage from "./components/education/EducationLists";
 import Positions from "./pages/Dashboard/Positions";
+import TradingDashboard from "./pages/Dashboard/charts";
 
 
 export default function App() {  
@@ -25,6 +26,7 @@ export default function App() {
             <Route  index path="/dashboard"  element={<Home />}/>                            
             <Route  index path="/setting"  element={<SettingsPage />}/>                            
             <Route  index path="/positions"  element={<Positions />}/>                            
+            <Route  index path="/chart"  element={<TradingDashboard />}/>                            
           </Route>
           <Route path="/" element={<LandingPage />} />
           {/* Auth Layout */}
