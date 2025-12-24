@@ -15,7 +15,7 @@ class analyzor :
         self.lastBuyPrice = 0
         self.lastState = 0
         self.position = 2
-        self.token= 'Token e683b1a322bae2ea76783b1551509dc70114b471' 
+        self.token= 'Token 7b380ea1d0afd96beb761bee0aac529845788229' 
         pass
     
     
