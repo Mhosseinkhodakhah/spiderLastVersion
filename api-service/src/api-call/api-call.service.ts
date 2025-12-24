@@ -9,7 +9,7 @@ export class ApiCallService {
     private readonly url: { currencies, balance , price , transAcions } = {transAcions :'https://apiv2.nobitex.ir/users/transactions-history' , price : 'https://apiv2.nobitex.ir/market/udf/history' , currencies: 'https://apiv2.nobitex.ir/v2/wallets?currencies', balance: 'https://apiv2.nobitex.ir/users/wallets/balance' }
     // private readonly coinMarketCapPriceToken = '266447fc-c176-4cc3-b317-c580778c801a'
     // private readonly coinMarketCapPrice = { fearOrNot: 'https://pro-api.coinmarketcap.com/v3/fear-and-greed/latest', price: 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/historical' }
-    private readonly token: string = 'Token e683b1a322bae2ea76783b1551509dc70114b471' 
+    private readonly token: string = 'Token 7b380ea1d0afd96beb761bee0aac529845788229' 
 
 
     ////////////////////////////////////// methods /////////////////////////////////////////////////////////
